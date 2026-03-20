@@ -585,7 +585,7 @@
         </div>
         <div class="bg-white rounded border border-border shadow-sm p-4 border-t-[3px] border-t-navy">
           <div class="flex items-center gap-2 mb-1">
-            <div class="w-2 h-2 rounded-full bg-navy"></div>
+            <img src="https://th.bing.com/th/id/R.fd56053b9165839824d265b038b087f2?rik=toXBPLzActtrVA&pid=ImgRaw&r=0" alt="SBA" class="w-5 h-5 object-contain">
             <span class="text-[10px] font-mono font-bold text-navy uppercase tracking-wider">SBA / APEX Support</span>
           </div>
           <div class="text-sm font-semibold text-txt mb-3 font-geist">Louisiana APEX Accelerator</div>
@@ -650,7 +650,7 @@
           <div class="flex flex-wrap gap-2">
             <span class="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-mono font-semibold bg-cdfi text-cdfitxt"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i>Small Business</span>
             <span class="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-mono font-semibold bg-warn text-warntxt"><i data-lucide="clock" class="w-3.5 h-3.5"></i>HUBZone (pending)</span>
-            <span class="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-mono font-semibold bg-cdfi text-cdfitxt"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i>SAM.gov Registered</span>
+            <span class="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-mono font-semibold bg-cdfi text-cdfitxt"><img src="https://vectorseek.com/wp-content/uploads/2023/11/SAM-Gov-Logo-Vector.svg-.png" alt="SAM.gov" class="w-3.5 h-3.5 object-contain">SAM.gov Registered</span>
           </div>
         </div>
       </div>
@@ -691,8 +691,8 @@ const businesses = [
 // Program/org badges for RFP cards
 const orgBadges = {
   "SAM.gov": [
-    { label: "SAM.gov", icon: "shield-check", bg: "#DFE6E1", color: "#004D1A" },
-    { label: "SBA", icon: "landmark", bg: "#DFDFE6", color: "#000066" },
+    { label: "SAM.gov", img: "https://vectorseek.com/wp-content/uploads/2023/11/SAM-Gov-Logo-Vector.svg-.png", bg: "#DFE6E1", color: "#004D1A" },
+    { label: "SBA", img: "https://th.bing.com/th/id/R.fd56053b9165839824d265b038b087f2?rik=toXBPLzActtrVA&pid=ImgRaw&r=0", bg: "#DFDFE6", color: "#000066" },
     { label: "USACE", icon: "hard-hat", bg: "#E9E3D8", color: "#804200" }
   ],
   "Louisiana LaPAC": [
@@ -740,17 +740,19 @@ function renderRFPCard(rfp) {
         <span class="text-[11px] font-medium text-txt font-body">Est. Value: ${rfp.value}</span>
         ${matched ? `<p class="text-[11px] text-txtsec italic font-body leading-snug">${rfp.reason}</p>` : ''}
         ${matched ? `<div class="flex items-center gap-1.5 mt-0.5"><div class="w-5 h-5 rounded-full flex items-center justify-center shrink-0" style="background:${biz.color}"><span class="text-[8px] font-bold text-white">${biz.initials}</span></div><span class="text-[11px] font-mono font-medium text-accent">Matched: ${biz.name}</span></div>` : ''}
-        <div class="flex items-center gap-2 mt-1">
-          ${(orgBadges[rfp.source] || []).map(b => `<div class="flex items-center gap-1 rounded px-1.5 py-0.5 text-[10px] font-mono font-semibold" style="background:${b.bg}; color:${b.color}"><i data-lucide="${b.icon}" class="w-3 h-3"></i>${b.label}</div>`).join('')}
-        </div>
       </div>
-      <div class="flex items-center justify-end gap-3 px-3.5 py-1.5 border-t border-border">
-        <button onclick="viewRFPDetail(${rfp.id})" class="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-mono font-medium text-txt bg-bg border border-border shadow-sm hover:bg-chip transition-colors">
-          <i data-lucide="eye" class="w-4 h-4"></i> View details
-        </button>
-        <button onclick="viewRFPDetail(${rfp.id})" class="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-mono font-medium text-white bg-accent hover:bg-orange-500 transition-colors">
-          <i data-lucide="pen-tool" class="w-4 h-4"></i> Draft response
-        </button>
+      <div class="flex items-center justify-between px-3.5 py-2 border-t border-border">
+        <div class="flex items-center gap-4">
+          ${(orgBadges[rfp.source] || []).map(b => b.img ? `<img src="${b.img}" alt="${b.label}" class="h-8 object-contain">` : `<div class="flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-mono font-semibold" style="background:${b.bg}; color:${b.color}"><i data-lucide="${b.icon}" class="w-5 h-5"></i>${b.label}</div>`).join('')}
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="viewRFPDetail(${rfp.id})" class="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-mono font-medium text-txt bg-bg border border-border shadow-sm hover:bg-chip transition-colors">
+            <i data-lucide="eye" class="w-4 h-4"></i> View details
+          </button>
+          <button onclick="viewRFPDetail(${rfp.id})" class="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-mono font-medium text-white bg-accent hover:bg-orange-500 transition-colors">
+            <i data-lucide="pen-tool" class="w-4 h-4"></i> Draft response
+          </button>
+        </div>
       </div>
     </div>
   `;
