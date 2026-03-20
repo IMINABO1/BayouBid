@@ -80,42 +80,21 @@
       <button class="w-8 h-8 rounded-full hover:bg-chip flex items-center justify-center transition-colors relative">
         <i data-lucide="bell" class="w-[18px] h-[18px] text-txtsec"></i>
       </button>
-      <div class="w-8 h-8 rounded-full bg-navy flex items-center justify-center cursor-pointer">
+      <button onclick="showPage('profile')" class="w-8 h-8 rounded-full bg-navy flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-accent transition-all">
         <span class="font-mono text-xs font-semibold text-white">JD</span>
-      </div>
+      </button>
     </div>
   </div>
 </nav>
 
 <!-- ==================== PAGE: MAIN (MATCHES) ==================== -->
 <div id="page-main" class="app-page">
-<!-- ==================== HERO STRIP ==================== -->
-<div class="flex flex-col md:flex-row items-start md:items-center justify-between bg-navy px-4 md:px-6 py-3 w-full gap-3">
-  <div class="flex flex-col gap-1 flex-1">
-    <h1 class="font-heading text-lg md:text-xl font-bold text-white">From Contract Access to Healthcare Access</h1>
-    <p class="text-sm text-white/70 font-body">AI-assisted matching and bid support for Gulf Coast small businesses</p>
-  </div>
-  <div class="hidden md:flex gap-2">
-    <div class="bg-white rounded p-2.5 w-[164px] flex flex-col gap-1">
-      <span class="font-heading text-xl font-semibold text-navy">$637B</span>
-      <span class="text-[11px] text-txtsec font-body leading-snug">FY2024 small-business-eligible federal contract market</span>
-    </div>
-    <div class="bg-white rounded p-2.5 w-[164px] flex flex-col gap-1">
-      <span class="font-heading text-xl font-semibold text-navy">$183B+</span>
-      <span class="text-[11px] text-txtsec font-body leading-snug">FY2024 federal prime contracts awarded to small businesses</span>
-    </div>
-    <div class="bg-white rounded p-2.5 w-[164px] flex flex-col gap-1 hidden lg:flex">
-      <span class="font-heading text-xl font-semibold text-navy">95%+</span>
-      <span class="text-[11px] text-txtsec font-body leading-snug">Port Fourchon share of Gulf deepwater energy production serviced</span>
-    </div>
-  </div>
-</div>
 
 <!-- ==================== MAIN BODY ==================== -->
-<div class="flex flex-col lg:flex-row gap-3 p-3 px-3 md:px-5 w-full" style="min-height: calc(100vh - 52px - 68px - 44px);">
+<div class="flex flex-col gap-3 p-4 px-4 md:px-10 lg:px-16 xl:px-24 w-full" style="min-height: calc(100vh - 52px - 44px);">
 
-  <!-- LEFT COLUMN -->
-  <div id="leftCol" class="flex-1 flex flex-col gap-2.5 min-w-0">
+  <!-- MAIN COLUMN -->
+  <div id="leftCol" class="flex flex-col gap-2.5 min-w-0">
 
     <!-- View 1: Opportunity Feed -->
     <div id="view1Left" class="flex flex-col gap-2.5">
@@ -160,45 +139,7 @@
     </div>
   </div>
 
-  <!-- RIGHT COLUMN -->
-  <div id="rightCol" class="w-full lg:w-[560px] flex flex-col gap-2 shrink-0">
 
-    <!-- Module A: Business Profile -->
-    <div id="profileCard" class="bg-white rounded border border-border shadow-sm flex flex-col overflow-hidden">
-      <div class="flex items-center justify-between px-3 py-2 border-b border-border">
-        <div class="flex items-center gap-2.5">
-          <i data-lucide="building-2" class="w-5 h-5 text-accent"></i>
-          <span class="font-mono text-base font-semibold text-txt">Business Profile</span>
-        </div>
-        <button class="text-sm font-mono text-txtsec hover:text-txt transition-colors">Edit Profile</button>
-      </div>
-      <div id="profileContent" class="px-3 py-2.5 flex flex-col gap-1.5">
-        <p class="text-sm text-txtsec font-geist italic">Select an RFP or click "Match RFPs" to see matched businesses</p>
-      </div>
-    </div>
-
-    <!-- Module C: AI Draft Assistant -->
-    <div id="draftCard" class="bg-white rounded border border-border shadow-sm flex flex-col overflow-hidden">
-      <div class="flex items-center gap-2.5 px-3 py-2 border-b border-border">
-        <i data-lucide="file-text" class="w-5 h-5 text-accent"></i>
-        <span class="font-mono text-base font-semibold text-txt">AI Draft Assistant</span>
-      </div>
-      <div id="draftContent" class="px-3 py-2.5 flex flex-col gap-1.5">
-        <p class="text-sm text-txtsec font-geist italic">Draft response will appear here when you select an RFP</p>
-      </div>
-    </div>
-
-    <!-- Module D: Advisor Guidance -->
-    <div id="advisorCard" class="bg-white rounded border border-border shadow-sm flex flex-col overflow-hidden">
-      <div class="flex items-center gap-2.5 px-3 py-2 border-b border-border">
-        <i data-lucide="users" class="w-5 h-5 text-[#000066]"></i>
-        <span class="font-mono text-base font-semibold text-txt">Advisor Guidance</span>
-      </div>
-      <div id="advisorContent" class="px-3 py-2.5 flex flex-col gap-2">
-        <p class="text-sm text-txtsec font-geist italic">Advisor recommendations will show when you work on an RFP</p>
-      </div>
-    </div>
-  </div>
 </div>
 
 <!-- ==================== IMPACT STRIP ==================== -->
@@ -220,7 +161,7 @@
 
 <!-- ==================== PAGE: ONBOARDING ==================== -->
 <div id="page-onboard" class="app-page hidden">
-  <div class="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-8">
+  <div class="px-4 md:px-10 lg:px-16 xl:px-24 py-8">
     <div class="mb-6">
       <h1 class="font-heading text-xl font-bold text-txt">Business Enrollment</h1>
       <p class="text-sm text-txtsec font-body">Complete your profile to start receiving matched contract opportunities.</p>
@@ -390,7 +331,7 @@
 
 <!-- ==================== PAGE: FRACTIONAL RFP ==================== -->
 <div id="page-fractional" class="app-page hidden">
-  <div class="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-8">
+  <div class="px-4 md:px-10 lg:px-16 xl:px-24 py-8">
     <div class="mb-5">
       <h1 class="font-heading text-xl font-bold text-txt">Fractional RFP — Consortium Bidding</h1>
       <p class="text-sm text-txtsec font-body">For contracts above $500,000 where no single business qualifies alone. Your business is part of a coordinated team bid.</p>
@@ -530,7 +471,7 @@
 
 <!-- ==================== PAGE: BID READINESS ==================== -->
 <div id="page-readiness" class="app-page hidden">
-  <div class="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-8">
+  <div class="px-4 md:px-10 lg:px-16 xl:px-24 py-8">
     <div class="mb-5">
       <h1 class="font-heading text-xl font-bold text-txt">Bid Readiness Program</h1>
       <p class="text-sm text-txtsec font-body">Know exactly where you stand — and exactly what to fix.</p>
@@ -675,16 +616,90 @@
   </div>
 </div>
 
+<!-- ==================== PAGE: BUSINESS PROFILE ==================== -->
+<div id="page-profile" class="app-page hidden">
+  <div class="px-4 md:px-10 lg:px-16 xl:px-24 py-8">
+    <div class="mb-6">
+      <h1 class="font-heading text-xl font-bold text-txt">Business Profile</h1>
+      <p class="text-sm text-txtsec font-body">Manage your business information, certifications, and readiness status.</p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Profile Info -->
+      <div class="lg:col-span-2 flex flex-col gap-5">
+        <div class="bg-white rounded-lg border border-border p-5 flex flex-col gap-4">
+          <div class="flex items-center gap-4">
+            <div class="w-14 h-14 rounded-full bg-navy flex items-center justify-center">
+              <span class="font-mono text-lg font-bold text-white">BM</span>
+            </div>
+            <div>
+              <h2 class="font-heading text-lg font-bold text-txt">Bayou Marine Fabrication LLC</h2>
+              <p class="text-sm text-txtsec font-body">James Boudreaux, Owner</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div><span class="text-xs font-semibold text-txtsec uppercase tracking-wider font-mono">Services</span><p class="text-sm text-txt font-geist mt-1">Welding, fabrication, vessel support, emergency repair</p></div>
+            <div><span class="text-xs font-semibold text-txtsec uppercase tracking-wider font-mono">Service Area</span><p class="text-sm text-txt font-geist mt-1">Lafourche, Terrebonne, Gulf support corridor</p></div>
+            <div><span class="text-xs font-semibold text-txtsec uppercase tracking-wider font-mono">Team Size</span><p class="text-sm text-txt font-geist mt-1">12 employees</p></div>
+            <div><span class="text-xs font-semibold text-txtsec uppercase tracking-wider font-mono">NAICS</span><p class="text-sm text-txt font-geist mt-1">3366 — Shipbuilding & boat building</p></div>
+            <div><span class="text-xs font-semibold text-txtsec uppercase tracking-wider font-mono">Annual Revenue</span><p class="text-sm text-txt font-geist mt-1">$500K - $1M</p></div>
+            <div><span class="text-xs font-semibold text-txtsec uppercase tracking-wider font-mono">Years in Operation</span><p class="text-sm text-txt font-geist mt-1">12 years</p></div>
+          </div>
+        </div>
+        <div class="bg-white rounded-lg border border-border p-5 flex flex-col gap-3">
+          <h3 class="font-heading text-sm font-semibold text-txt">Certifications</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-mono font-semibold bg-cdfi text-cdfitxt"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i>Small Business</span>
+            <span class="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-mono font-semibold bg-warn text-warntxt"><i data-lucide="clock" class="w-3.5 h-3.5"></i>HUBZone (pending)</span>
+            <span class="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-mono font-semibold bg-cdfi text-cdfitxt"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i>SAM.gov Registered</span>
+          </div>
+        </div>
+      </div>
+      <!-- Readiness Sidebar -->
+      <div class="flex flex-col gap-5">
+        <div class="bg-white rounded-lg border border-border p-5 flex flex-col gap-3">
+          <h3 class="font-heading text-sm font-semibold text-txt">Readiness Status</h3>
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-3xl font-bold text-accent">72%</span>
+          </div>
+          <div class="w-full h-3 bg-chip rounded-full overflow-hidden"><div class="h-full bg-accent rounded-full" style="width:72%"></div></div>
+          <div class="bg-warn rounded-lg px-3 py-2 flex flex-col gap-1 mt-1">
+            <span class="text-xs font-semibold text-warntxt font-geist">Missing items</span>
+            <ul class="flex flex-col gap-1">
+              <li class="text-xs text-warntxt font-geist flex items-center gap-1.5"><i data-lucide="alert-circle" class="w-3 h-3 shrink-0"></i>Updated capability statement</li>
+              <li class="text-xs text-warntxt font-geist flex items-center gap-1.5"><i data-lucide="alert-circle" class="w-3 h-3 shrink-0"></i>Bonding docs</li>
+              <li class="text-xs text-warntxt font-geist flex items-center gap-1.5"><i data-lucide="alert-circle" class="w-3 h-3 shrink-0"></i>HUBZone review</li>
+            </ul>
+          </div>
+        </div>
+        <button class="w-full bg-accent hover:bg-orange-500 text-white font-mono text-sm font-semibold py-2.5 rounded-full transition-colors">Edit Profile</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ==================== JAVASCRIPT ==================== -->
 <script>
 // ===== SAMPLE DATA =====
 const businesses = [
-  { name: "Bayou Marine Fabrication LLC", services: "Welding, fabrication, vessel support, emergency repair", area: "Lafourche, Terrebonne, Gulf support corridor", team: "12 employees", certs: "Small Business, HUBZone (pending)", readiness: 72, missing: "Updated capability statement, bonding docs, HUBZone review" },
-  { name: "Gulf Coast Heavy Equipment Inc", services: "Crane operation, heavy equipment rental, site prep", area: "Lafourche, Terrebonne, St. Mary Parish", team: "28 employees", certs: "Small Business, 8(a) Certified", readiness: 85, missing: "Insurance renewal, updated equipment inventory" },
-  { name: "Thibodaux Environmental Services", services: "Environmental remediation, tank cleaning, hazmat disposal", area: "Lafourche, Assumption, Terrebonne", team: "9 employees", certs: "Small Business, SDVOSB", readiness: 64, missing: "EPA compliance docs, bonding capacity letter, past performance refs" },
-  { name: "Port Fourchon Logistics Co", services: "Maritime logistics, cargo handling, dock management", area: "Lafourche Parish, Gulf of Mexico corridor", team: "35 employees", certs: "Small Business, Women-Owned", readiness: 91, missing: "Updated SAM.gov profile" },
-  { name: "Acadiana Electrical Contractors", services: "Industrial electrical, generator maintenance, panel upgrades", area: "Lafourche, Terrebonne, Assumption, St. Mary", team: "16 employees", certs: "Small Business, Veteran-Owned", readiness: 78, missing: "Electrical license renewal, capability statement update" }
+  { name: "Bayou Marine Fabrication LLC", initials: "BM", color: "#1A2B4D", services: "Welding, fabrication, vessel support, emergency repair", area: "Lafourche, Terrebonne, Gulf support corridor", team: "12 employees", certs: "Small Business, HUBZone (pending)", readiness: 72, missing: "Updated capability statement, bonding docs, HUBZone review" },
+  { name: "Gulf Coast Heavy Equipment Inc", initials: "GC", color: "#2D6A4F", services: "Crane operation, heavy equipment rental, site prep", area: "Lafourche, Terrebonne, St. Mary Parish", team: "28 employees", certs: "Small Business, 8(a) Certified", readiness: 85, missing: "Insurance renewal, updated equipment inventory" },
+  { name: "Thibodaux Environmental Services", initials: "TE", color: "#7B2D8B", services: "Environmental remediation, tank cleaning, hazmat disposal", area: "Lafourche, Assumption, Terrebonne", team: "9 employees", certs: "Small Business, SDVOSB", readiness: 64, missing: "EPA compliance docs, bonding capacity letter, past performance refs" },
+  { name: "Port Fourchon Logistics Co", initials: "PF", color: "#B45309", services: "Maritime logistics, cargo handling, dock management", area: "Lafourche Parish, Gulf of Mexico corridor", team: "35 employees", certs: "Small Business, Women-Owned", readiness: 91, missing: "Updated SAM.gov profile" },
+  { name: "Acadiana Electrical Contractors", initials: "AE", color: "#DC2626", services: "Industrial electrical, generator maintenance, panel upgrades", area: "Lafourche, Terrebonne, Assumption, St. Mary", team: "16 employees", certs: "Small Business, Veteran-Owned", readiness: 78, missing: "Electrical license renewal, capability statement update" }
 ];
+
+// Program/org badges for RFP cards
+const orgBadges = {
+  "SAM.gov": [
+    { label: "SAM.gov", icon: "shield-check", bg: "#DFE6E1", color: "#004D1A" },
+    { label: "SBA", icon: "landmark", bg: "#DFDFE6", color: "#000066" },
+    { label: "USACE", icon: "hard-hat", bg: "#E9E3D8", color: "#804200" }
+  ],
+  "Louisiana LaPAC": [
+    { label: "LaPAC", icon: "file-badge", bg: "#E9E3D8", color: "#804200" },
+    { label: "LED", icon: "briefcase", bg: "#DFE6E1", color: "#004D1A" }
+  ]
+};
 
 const rfps = [
   { id: 1, title: "Coastal Facility Maintenance & Repair Support", source: "SAM.gov", sourceBg: "#DFE6E1", sourceColor: "#004D1A", buyer: "Federal / infrastructure buyer", setAside: "Small Business Set-Aside", value: "$250K–$1.2M", fit: 89, naics: "238290", deadline: "Apr 15, 2026", location: "Lafourche Parish, LA", reason: "Strong overlap with your marine maintenance certifications and Gulf Coast service area.", matchedBiz: 0, description: "The U.S. Army Corps of Engineers seeks qualified small businesses to provide ongoing maintenance, repair, and facility support services for coastal infrastructure along the Gulf of Mexico. Work includes structural welding, corrosion control, dock repair, and emergency response capabilities.", requirements: ["Active SAM.gov registration", "NAICS 238290 experience", "Gulf Coast operational capability", "Bonding capacity $1M+", "Safety certifications (OSHA 30)"] },
@@ -716,7 +731,7 @@ function renderRFPCard(rfp) {
           </div>
         </div>
       </div>
-      <div class="flex flex-col gap-1 px-3.5 py-2.5">
+      <div class="flex flex-col gap-1.5 px-3.5 py-2.5">
         <span class="font-heading text-[13px] font-semibold text-txt">${rfp.title}</span>
         <div class="flex gap-4">
           <span class="text-[13px] text-txtsec font-body">${rfp.buyer}</span>
@@ -724,7 +739,10 @@ function renderRFPCard(rfp) {
         </div>
         <span class="text-[11px] font-medium text-txt font-body">Est. Value: ${rfp.value}</span>
         ${matched ? `<p class="text-[11px] text-txtsec italic font-body leading-snug">${rfp.reason}</p>` : ''}
-        ${matched ? `<div class="flex items-center gap-1.5 mt-0.5"><i data-lucide="building-2" class="w-3 h-3 text-accent"></i><span class="text-[11px] font-mono font-medium text-accent">Matched: ${biz.name}</span></div>` : ''}
+        ${matched ? `<div class="flex items-center gap-1.5 mt-0.5"><div class="w-5 h-5 rounded-full flex items-center justify-center shrink-0" style="background:${biz.color}"><span class="text-[8px] font-bold text-white">${biz.initials}</span></div><span class="text-[11px] font-mono font-medium text-accent">Matched: ${biz.name}</span></div>` : ''}
+        <div class="flex items-center gap-2 mt-1">
+          ${(orgBadges[rfp.source] || []).map(b => `<div class="flex items-center gap-1 rounded px-1.5 py-0.5 text-[10px] font-mono font-semibold" style="background:${b.bg}; color:${b.color}"><i data-lucide="${b.icon}" class="w-3 h-3"></i>${b.label}</div>`).join('')}
+        </div>
       </div>
       <div class="flex items-center justify-end gap-3 px-3.5 py-1.5 border-t border-border">
         <button onclick="viewRFPDetail(${rfp.id})" class="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-mono font-medium text-txt bg-bg border border-border shadow-sm hover:bg-chip transition-colors">
@@ -743,82 +761,7 @@ function renderAllCards() {
   lucide.createIcons();
 }
 
-function renderBusinessProfile(biz) {
-  document.getElementById('profileContent').innerHTML = `
-    <span class="font-mono text-[13px] font-semibold text-txt">${biz.name}</span>
-    <div class="flex flex-col gap-1">
-      <div class="flex gap-2"><span class="text-[13px] font-semibold text-txtsec font-geist">Services:</span><span class="text-[13px] text-txt font-geist">${biz.services}</span></div>
-      <div class="flex gap-2"><span class="text-[13px] font-semibold text-txtsec font-geist">Service Area:</span><span class="text-[13px] text-txt font-geist">${biz.area}</span></div>
-      <div class="flex gap-4">
-        <div class="flex gap-1.5"><span class="text-[13px] font-semibold text-txtsec font-geist">Team Size:</span><span class="text-[13px] text-txt font-geist">${biz.team}</span></div>
-        <div class="flex gap-1.5"><span class="text-[13px] font-semibold text-txtsec font-geist">Certifications:</span><span class="text-[13px] text-txt font-geist">${biz.certs}</span></div>
-      </div>
-    </div>
-    <div class="flex flex-col gap-1">
-      <div class="flex items-center justify-between">
-        <span class="text-[13px] font-semibold text-txtsec font-geist">Readiness Status</span>
-        <span class="font-mono text-sm font-semibold text-accent">${biz.readiness}%</span>
-      </div>
-      <div class="w-full h-4 bg-chip rounded-full overflow-hidden border border-border">
-        <div class="h-full bg-accent rounded-full score-animate" style="width:${biz.readiness}%"></div>
-      </div>
-    </div>
-    <div class="bg-warn rounded-lg px-2 py-1.5 flex flex-col gap-0.5">
-      <span class="text-xs font-semibold text-warntxt font-geist">Missing items</span>
-      <span class="text-xs text-warntxt font-geist">${biz.missing}</span>
-    </div>
-  `;
-}
-
-function renderDraftAssistant(rfp) {
-  const biz = businesses[rfp.matchedBiz];
-  document.getElementById('draftContent').innerHTML = `
-    <div class="bg-bg rounded-lg border border-border p-2.5 flex flex-col gap-1 max-h-[120px] overflow-hidden">
-      <span class="text-[13px] font-semibold text-txt font-geist">1. Company Overview</span>
-      <span class="text-xs text-txtsec font-geist">${biz.name} is a Lafourche-based small business specializing in ${biz.services.toLowerCase()}...</span>
-      <span class="text-[13px] font-semibold text-txt font-geist">2. Relevant Past Performance</span>
-      <span class="text-xs text-txtsec font-geist">Emergency repair operations for offshore platforms, maintenance contracts...</span>
-      <span class="text-[13px] font-semibold text-txt font-geist">3. Staffing & Mobilization Plan</span>
-      <span class="text-[13px] font-semibold text-txt font-geist">4. Equipment Availability</span>
-      <span class="text-[13px] font-semibold text-txt font-geist">5. Compliance Checklist</span>
-      <span class="text-[13px] font-semibold text-warntxt font-geist">6. Missing Attachments (2)</span>
-    </div>
-    <div class="flex gap-2 pt-1">
-      <button class="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-mono font-medium text-white bg-accent hover:bg-orange-500 transition-colors">
-        <i data-lucide="sparkles" class="w-4 h-4"></i> Generate capability statement
-      </button>
-      <button class="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-mono font-medium text-txt bg-bg border border-border shadow-sm hover:bg-chip transition-colors">
-        <i data-lucide="file-down" class="w-4 h-4"></i> Draft full proposal
-      </button>
-    </div>
-  `;
-  lucide.createIcons();
-}
-
-function renderAdvisorGuidance() {
-  document.getElementById('advisorContent').innerHTML = `
-    <div class="bg-cdfi rounded-lg border border-border p-2.5 flex flex-col gap-1">
-      <div class="flex items-center gap-2">
-        <i data-lucide="landmark" class="w-4 h-4 text-cdfitxt"></i>
-        <span class="font-mono text-sm font-semibold text-cdfitxt">CDFI Partner</span>
-      </div>
-      <span class="text-xs text-txt font-geist">&bull; Working capital estimate</span>
-      <span class="text-xs text-txt font-geist">&bull; Equipment financing options</span>
-      <span class="text-xs text-txt font-geist">&bull; Bridge funding for payroll / mobilization</span>
-    </div>
-    <div class="bg-sba rounded-lg border border-border p-2.5 flex flex-col gap-1">
-      <div class="flex items-center gap-2">
-        <i data-lucide="shield-check" class="w-4 h-4 text-sbatxt"></i>
-        <span class="font-mono text-sm font-semibold text-sbatxt">SBA / APEX Support</span>
-      </div>
-      <span class="text-xs text-txt font-geist">&bull; SAM registration status</span>
-      <span class="text-xs text-txt font-geist">&bull; Certification guidance</span>
-      <span class="text-xs text-txt font-geist">&bull; Bid-readiness checklist</span>
-      <span class="text-xs text-txt font-geist">&bull; Procurement coaching</span>
-    </div>
-  `;
-  lucide.createIcons();
-}
+// Sidebar render functions removed — profile accessible via JD avatar, draft/advisor in other pages
 
 // ===== VIEW MANAGEMENT =====
 function showView(view) {
@@ -829,10 +772,6 @@ function showView(view) {
   if (view === 'home') {
     document.getElementById('view1Left').classList.remove('hidden');
     currentRfp = null;
-    // Reset sidebar
-    document.getElementById('profileContent').innerHTML = '<p class="text-sm text-txtsec font-geist italic">Select an RFP or click "Match RFPs" to see matched businesses</p>';
-    document.getElementById('draftContent').innerHTML = '<p class="text-sm text-txtsec font-geist italic">Draft response will appear here when you select an RFP</p>';
-    document.getElementById('advisorContent').innerHTML = '<p class="text-sm text-txtsec font-geist italic">Advisor recommendations will show when you work on an RFP</p>';
   } else if (view === 'detail') {
     document.getElementById('view2Left').classList.remove('hidden');
   } else if (view === 'upload') {
@@ -899,11 +838,6 @@ function viewRFPDetail(rfpId) {
       </div>
     </div>
   `;
-
-  // Update sidebar
-  renderBusinessProfile(biz);
-  renderDraftAssistant(rfp);
-  renderAdvisorGuidance();
 
   showView('detail');
   lucide.createIcons();
@@ -980,10 +914,6 @@ function matchRFPs() {
   btn.classList.remove('bg-accent', 'hover:bg-orange-500');
   btn.classList.add('bg-ok', 'hover:bg-green-600');
   renderAllCards();
-  // Populate sidebar with first business
-  renderBusinessProfile(businesses[0]);
-  renderDraftAssistant(rfps[0]);
-  renderAdvisorGuidance();
 }
 
 function toggleDoc(index) {
@@ -1041,6 +971,8 @@ function showPage(id, btn) {
   if (target) target.classList.remove('hidden');
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   if (btn) btn.classList.add('active');
+  if (id === 'main') showView('home');
+  lucide.createIcons();
 }
 
 // ===== ONBOARDING STEPS =====
