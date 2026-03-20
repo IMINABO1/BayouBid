@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LBRI — Lafourche Business Recovery Initiative</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1b3a6b;
+  --navy-dark: #0f2347;
+  --navy-light: #e8eef7;
+  --red: #c0392b;
+  --red-light: #fdf0ee;
+  --teal: #0d6e4e;
+  --teal-light: #e8f5f1;
+  --amber: #c47d1e;
+  --amber-light: #fdf5e8;
+  --bg: #f9f8f5;
+  --white: #ffffff;
+  --border: #e5e4e0;
+  --text: #111827;
+  --muted: #6b7280;
+  --font: 'DM Sans', sans-serif;
+  --mono: 'DM Mono', monospace;
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14px;line-height:1.6}
+.hidden{display:none!important}
+
+/* ── NAV ── */
+nav{background:var(--navy-dark);height:52px;display:flex;align-items:center;padding:0 24px;gap:20px;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,0.06)}
+.nav-logo{display:flex;align-items:center;gap:8px;cursor:pointer;flex-shrink:0}
+.logo-mark{width:28px;height:28px;background:var(--navy);border:1.5px solid #3b6abf;border-radius:6px;display:flex;align-items:center;justify-content:center}
+.logo-mark svg{width:14px;height:14px}
+.logo-name{color:#fff;font-weight:600;font-size:14px;letter-spacing:-.3px}
+.logo-name span{color:#5b9bd5}
+.nav-links{display:flex;gap:2px;margin-left:20px}
+.nav-link{color:#94a3b8;font-size:13px;padding:6px 12px;border-radius:6px;cursor:pointer;transition:all .15s;border:none;background:none;font-family:var(--font)}
+.nav-link:hover{color:#fff;background:rgba(255,255,255,0.06)}
+.nav-link.active{color:#fff;background:rgba(255,255,255,0.1);border-bottom:2px solid var(--red)}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.nav-chip{background:#1e2d3d;border:1px solid #2d4261;border-radius:20px;padding:4px 12px;font-size:11px;color:#94a3b8}
+.nav-bell{width:32px;height:32px;border-radius:6px;background:#1e2d3d;border:1px solid #2d4261;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#94a3b8;position:relative}
+.nav-bell-dot{width:7px;height:7px;background:var(--red);border-radius:50%;position:absolute;top:6px;right:6px;border:1.5px solid var(--navy-dark)}
+.nav-avatar{width:30px;height:30px;border-radius:50%;background:var(--navy);border:2px solid #3b6abf;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#93c5fd}
+
+/* ── IMPACT STRIP ── */
+.impact-strip{background:var(--navy-dark);padding:10px 24px;display:flex;align-items:center;justify-content:center;gap:6px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.impact-node{font-size:11px;color:#64748b;white-space:nowrap}
+.impact-node.hl{color:#cbd5e1;font-weight:500}
+.impact-node.gr{color:#4ade80;font-weight:600}
+.impact-arr{color:#334155;font-size:12px}
+
+/* ── PAGE WRAPPER ── */
+.page{display:none;animation:fadeIn .2s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── CONTAINERS ── */
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+.section-head{font-size:11px;font-weight:600;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:12px}
+
+/* ── CARDS ── */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.card-sm{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+
+/* ── BUTTONS ── */
+.btn-primary{background:var(--navy);color:#fff;border:none;border-radius:7px;padding:9px 18px;font-size:13px;font-weight:500;cursor:pointer;font-family:var(--font);transition:background .15s}
+.btn-primary:hover{background:var(--navy-dark)}
+.btn-secondary{background:var(--white);color:var(--text);border:1px solid var(--border);border-radius:7px;padding:9px 18px;font-size:13px;font-weight:500;cursor:pointer;font-family:var(--font);transition:all .15s}
+.btn-secondary:hover{border-color:#94a3b8}
+.btn-teal{background:var(--teal);color:#fff;border:none;border-radius:7px;padding:9px 18px;font-size:13px;font-weight:500;cursor:pointer;font-family:var(--font)}
+.btn-sm{padding:5px 12px;font-size:12px}
+
+/* ── BADGES ── */
+.badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;letter-spacing:.2px}
+.badge-navy{background:var(--navy-light);color:var(--navy)}
+.badge-amber{background:var(--amber-light);color:var(--amber)}
+.badge-teal{background:var(--teal-light);color:var(--teal)}
+.badge-red{background:var(--red-light);color:var(--red)}
+
+/* ── FIT RING ── */
+.fit-ring{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;border:2.5px solid}
+.fit-93{background:#e8f5f1;color:var(--teal);border-color:var(--teal)}
+.fit-88{background:var(--navy-light);color:var(--navy);border-color:var(--navy)}
+.fit-84{background:var(--amber-light);color:var(--amber);border-color:var(--amber)}
+.fit-79{background:#f3f4f6;color:#6b7280;border-color:#d1d5db}
+
+/* ────────────────────────────────── */
+/* PAGE 1 — LANDING                  */
+/* ────────────────────────────────── */
+.hero{background:var(--navy-dark);padding:72px 0 60px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 50%, rgba(27,58,107,0.6) 0%, transparent 70%);pointer-events:none}
+.hero-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1fr 400px;gap:48px;align-items:center}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:1.2px;color:#5b9bd5;text-transform:uppercase;margin-bottom:16px}
+.hero-title{font-size:44px;font-weight:600;color:#fff;line-height:1.1;margin-bottom:16px;letter-spacing:-.5px}
+.hero-title span{color:#c0392b}
+.hero-sub{font-size:16px;color:#94a3b8;line-height:1.7;margin-bottom:28px;max-width:480px}
+.hero-actions{display:flex;gap:12px}
+.btn-hero-primary{background:var(--red);color:#fff;border:none;border-radius:8px;padding:12px 24px;font-size:14px;font-weight:500;cursor:pointer;font-family:var(--font);transition:background .15s}
+.btn-hero-primary:hover{background:#a93226}
+.btn-hero-secondary{background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:12px 24px;font-size:14px;font-weight:500;cursor:pointer;font-family:var(--font)}
+.stat-cards{display:flex;flex-direction:column;gap:12px}
+.stat-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:16px 20px}
+.stat-card-val{font-size:28px;font-weight:600;color:#fff;line-height:1}
+.stat-card-label{font-size:11px;color:#64748b;margin-top:4px;line-height:1.4}
+.stat-card.accent .stat-card-val{color:var(--red)}
+
+.landing-body{padding:48px 0}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:48px}
+.feature-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+.feature-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.feature-title{font-size:15px;font-weight:600;margin-bottom:6px}
+.feature-desc{font-size:13px;color:var(--muted);line-height:1.6}
+
+/* ────────────────────────────────── */
+/* PAGE 2 — ONBOARDING               */
+/* ────────────────────────────────── */
+.onboard-wrap{padding:32px 0 48px}
+.progress-bar{display:flex;align-items:center;gap:0;margin-bottom:36px}
+.prog-step{display:flex;align-items:center;gap:8px;flex:1}
+.prog-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;border:2px solid var(--border);background:var(--white);color:var(--muted)}
+.prog-dot.done{background:var(--teal);border-color:var(--teal);color:#fff}
+.prog-dot.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.prog-label{font-size:12px;color:var(--muted);font-weight:500}
+.prog-label.active{color:var(--navy);font-weight:600}
+.prog-line{flex:1;height:2px;background:var(--border);margin:0 8px}
+.prog-line.done{background:var(--teal)}
+
+.onboard-step{display:none}
+.onboard-step.active{display:block}
+.onboard-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:12px;font-weight:600;color:var(--text);margin-bottom:5px;letter-spacing:.2px}
+.form-group input,.form-group select,.form-group textarea{width:100%;border:1px solid var(--border);border-radius:7px;padding:9px 12px;font-size:13px;font-family:var(--font);outline:none;transition:border .15s;background:var(--white)}
+.form-group input:focus,.form-group select:focus{border-color:var(--navy)}
+.checkbox-group{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.check-chip{border:1px solid var(--border);border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer;transition:all .15s;background:var(--white);user-select:none}
+.check-chip.checked{background:var(--navy-light);border-color:#93c5fd;color:var(--navy);font-weight:500}
+
+.integrations-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.integration-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:14px;display:flex;align-items:center;justify-content:space-between}
+.int-left{display:flex;align-items:center;gap:10px}
+.int-logo{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.int-name{font-size:13px;font-weight:600}
+.int-desc{font-size:11px;color:var(--muted)}
+.btn-connect{border:1px solid var(--border);background:var(--white);border-radius:6px;padding:4px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font);color:var(--navy);transition:all .15s}
+.btn-connect.connected{background:var(--teal-light);border-color:var(--teal);color:var(--teal)}
+
+.readiness-meter{text-align:center;margin-bottom:24px}
+.meter-wrap{position:relative;width:180px;height:90px;margin:0 auto 12px}
+.meter-svg{width:100%;height:100%}
+.meter-val{position:absolute;bottom:0;left:50%;transform:translateX(-50%);font-size:32px;font-weight:600;color:var(--amber)}
+.readiness-lists{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.check-list li{list-style:none;display:flex;align-items:flex-start;gap:7px;font-size:13px;margin-bottom:8px;line-height:1.4}
+.check-icon{width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-size:10px}
+.check-icon.ok{background:var(--teal-light);color:var(--teal)}
+.check-icon.warn{background:var(--amber-light);color:var(--amber)}
+.check-icon.block{background:var(--red-light);color:var(--red)}
+
+/* ────────────────────────────────── */
+/* PAGE 3 — MATCHES                  */
+/* ────────────────────────────────── */
+.matches-layout{display:grid;grid-template-columns:220px 1fr;gap:20px;padding:24px 0 48px;align-items:start}
+.filters-panel{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;position:sticky;top:72px}
+.filter-title{font-size:12px;font-weight:600;margin-bottom:12px}
+.filter-group{margin-bottom:14px}
+.filter-group label{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.4px;text-transform:uppercase;display:block;margin-bottom:6px}
+.filter-pills{display:flex;flex-direction:column;gap:4px}
+.fpill{font-size:12px;padding:5px 10px;border-radius:5px;cursor:pointer;border:1px solid var(--border);background:var(--white);text-align:left;font-family:var(--font);transition:all .15s;color:var(--text)}
+.fpill.active{background:var(--navy-light);border-color:#93c5fd;color:var(--navy);font-weight:500}
+.fpill:hover{border-color:#94a3b8}
+.matches-main{}
+.matches-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.matches-header h2{font-size:16px;font-weight:600}
+.matches-header p{font-size:12px;color:var(--muted)}
+.result-count{font-size:12px;color:var(--muted);margin-bottom:14px}
+.result-count strong{color:var(--text)}
+
+.opp-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:12px;box-shadow:var(--shadow);transition:box-shadow .15s}
+.opp-card:hover{box-shadow:var(--shadow-md)}
+.opp-card.selected{border-color:var(--navy);box-shadow:0 0 0 2px var(--navy-light)}
+.opp-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
+.opp-badges{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.opp-title{font-size:14px;font-weight:600;margin-bottom:5px}
+.opp-meta{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:10px}
+.meta-item{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:4px}
+.value-tag{background:#f3f4f6;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600;color:#374151;font-family:var(--mono)}
+.ai-reason{background:#f9f8f5;border-left:2px solid var(--navy);border-radius:0 5px 5px 0;padding:7px 10px;font-size:12px;color:#374151;margin-bottom:12px;line-height:1.5}
+.ai-reason::before{content:'AI match: ';font-weight:600;color:var(--navy)}
+
+.doc-readiness{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;background:#f9f8f5;border-radius:7px;padding:12px}
+.doc-col-title{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:7px}
+.doc-item{display:flex;align-items:flex-start;gap:6px;font-size:12px;margin-bottom:5px;line-height:1.4}
+.doc-dot{width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;margin-top:1px}
+.doc-dot.ok{background:var(--teal-light);color:var(--teal)}
+.doc-dot.missing{background:var(--red-light);color:var(--red)}
+.doc-link{color:var(--navy);font-size:11px;text-decoration:none;margin-left:4px}
+.opp-actions{display:flex;gap:8px}
+
+/* ────────────────────────────────── */
+/* PAGE 4 — FRACTIONAL RFP           */
+/* ────────────────────────────────── */
+.frac-wrap{padding:24px 0 48px}
+.contract-banner{background:var(--navy-dark);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.cb-left h2{font-size:16px;font-weight:600;color:#fff;margin-bottom:6px}
+.cb-meta{display:flex;gap:16px}
+.cb-meta span{font-size:12px;color:#94a3b8;display:flex;align-items:center;gap:4px}
+.cb-meta strong{color:#fff}
+.cb-status{background:rgba(251,191,36,0.15);border:1px solid rgba(251,191,36,0.3);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:600;color:#fbbf24;white-space:nowrap}
+.frac-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:20px}
+.your-scope{background:var(--white);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:var(--radius);padding:18px}
+.your-scope h3{font-size:13px;font-weight:600;margin-bottom:4px}
+.your-scope .biz-name{font-size:12px;color:var(--muted);margin-bottom:14px}
+.scope-detail{background:var(--teal-light);border-radius:7px;padding:12px;margin-bottom:14px}
+.scope-detail .scope-type{font-size:11px;font-weight:600;color:var(--teal);letter-spacing:.3px;text-transform:uppercase;margin-bottom:3px}
+.scope-detail .scope-val{font-size:20px;font-weight:600;color:var(--teal)}
+.scope-detail .scope-sub{font-size:11px;color:#0f6e56}
+.prog-label-row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px}
+.prog-bar-track{height:7px;background:#e5e7eb;border-radius:4px;overflow:hidden;margin-bottom:14px}
+.prog-bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--teal),#22c55e)}
+.contact-card{background:#f9f8f5;border-radius:7px;padding:10px 12px;display:flex;align-items:center;gap:10px}
+.contact-avatar{width:32px;height:32px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#93c5fd;flex-shrink:0}
+
+.consortium-table-wrap{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+.consortium-table-wrap h3{font-size:13px;font-weight:600;margin-bottom:4px}
+.consortium-table-wrap p{font-size:12px;color:var(--muted);margin-bottom:14px}
+.ctable{width:100%;border-collapse:collapse;font-size:12px}
+.ctable th{font-size:10px;font-weight:700;color:var(--muted);text-align:left;padding:7px 8px;border-bottom:2px solid var(--border);text-transform:uppercase;letter-spacing:.4px}
+.ctable td{padding:8px 8px;border-bottom:1px solid #f5f5f3;vertical-align:middle}
+.ctable tr:last-child td{border-bottom:none}
+.ctable tr.you td{background:#f0f7ff}
+.ctable tr.open td{color:#9ca3af;font-style:italic}
+.readiness-mini{height:5px;border-radius:3px;background:#e5e7eb;margin-top:3px;overflow:hidden}
+.readiness-mini-fill{height:100%;border-radius:3px;background:var(--teal)}
+.status-chip{font-size:10px;padding:2px 8px;border-radius:12px;font-weight:600}
+.status-confirmed{background:var(--teal-light);color:var(--teal)}
+.status-active{background:var(--navy-light);color:var(--navy)}
+.status-open{background:#f3f4f6;color:#9ca3af}
+.fed-note{font-size:10px;color:#9ca3af;margin-top:12px;line-height:1.5;padding-top:10px;border-top:1px solid var(--border)}
+
+/* ────────────────────────────────── */
+/* PAGE 5 — READINESS                */
+/* ────────────────────────────────── */
+.readiness-wrap{padding:24px 0 48px}
+.readiness-top{display:grid;grid-template-columns:240px 1fr;gap:20px;margin-bottom:20px}
+.score-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px;text-align:center;box-shadow:var(--shadow)}
+.score-card h3{font-size:13px;font-weight:600;margin-bottom:4px}
+.score-card p{font-size:11px;color:var(--muted);margin-bottom:20px}
+.big-gauge{margin:0 auto 8px;position:relative;width:160px;height:80px}
+.gauge-val{position:absolute;bottom:0;left:50%;transform:translateX(-50%);font-size:36px;font-weight:600;color:var(--amber);font-family:var(--mono)}
+.gauge-pct{font-size:13px;color:var(--muted);margin-bottom:14px}
+.status-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.status-col h4{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid}
+.status-col.green h4{color:var(--teal);border-color:var(--teal)}
+.status-col.amber h4{color:var(--amber);border-color:var(--amber)}
+.status-col.red h4{color:var(--red);border-color:var(--red)}
+
+.action-plan{margin-bottom:20px}
+.action-plan h3{font-size:15px;font-weight:600;margin-bottom:14px}
+.actions-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.action-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+.action-priority{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.action-title{font-size:13px;font-weight:600;margin-bottom:8px}
+.action-meta{display:flex;gap:12px;margin-bottom:12px}
+.action-meta span{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:3px}
+.impact-badge{background:var(--teal-light);color:var(--teal);font-size:10px;font-weight:600;padding:2px 8px;border-radius:12px}
+
+.advisor-section h3{font-size:15px;font-weight:600;margin-bottom:14px}
+.advisor-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.advisor-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+.advisor-label{font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.advisor-org{font-size:13px;font-weight:600;margin-bottom:10px}
+.advisor-items{list-style:none}
+.advisor-items li{font-size:12px;color:#4b5563;padding:3px 0;display:flex;align-items:center;gap:5px;border-bottom:1px solid #f5f5f3}
+.advisor-items li:last-child{border-bottom:none}
+.advisor-items li::before{content:'›';color:var(--muted);font-weight:700}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="showPage('landing')">
+    <div class="logo-mark">
+      <svg viewBox="0 0 14 14" fill="none"><path d="M2 10 C2 6 5 3 7 3 C9 3 12 6 12 10" stroke="#5b9bd5" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M5 10 L7 6 L9 10" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    </div>
+    <span class="logo-name">LBRI <span>System</span></span>
+  </div>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="showPage('landing',this)">Overview</button>
+    <button class="nav-link" onclick="showPage('onboard',this)">Onboarding</button>
+    <button class="nav-link" onclick="showPage('matches',this)">My Matches</button>
+    <button class="nav-link" onclick="showPage('fractional',this)">Fractional RFP</button>
+    <button class="nav-link" onclick="showPage('readiness',this)">Bid Readiness</button>
+  </div>
+  <div class="nav-right">
+    <span class="nav-chip">Lafourche Parish</span>
+    <div class="nav-bell">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm6-4l-1-1V6A5 5 0 0 0 3 6v5L2 12v1h12v-1z"/></svg>
+      <span class="nav-bell-dot"></span>
+    </div>
+    <div class="nav-avatar">BM</div>
+  </div>
+</nav>
+
+<!-- IMPACT STRIP -->
+<div class="impact-strip">
+  <span class="impact-node hl">Contracts Won</span><span class="impact-arr">→</span>
+  <span class="impact-node">Stable W-2 Jobs</span><span class="impact-arr">→</span>
+  <span class="impact-node">Employer Benefits</span><span class="impact-arr">→</span>
+  <span class="impact-node">Health Coverage Restored</span><span class="impact-arr">→</span>
+  <span class="impact-node gr">IGS Recovery</span>
+</div>
+
+<!-- ══════════════ PAGE 1 — LANDING ══════════════ -->
+<div id="page-landing" class="page active">
+  <div class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">Lafourche Business Recovery Initiative</div>
+        <h1 class="hero-title">Gulf Coast Businesses.<br><span>Federal Contracts.</span><br>Real Jobs.</h1>
+        <p class="hero-sub">The LBRI connects Lafourche small businesses to the government contracts they qualify for — matching by capability, guiding through every step, and unlocking the capital to deliver.</p>
+        <div class="hero-actions">
+          <button class="btn-hero-primary" onclick="showPage('onboard',document.querySelectorAll('.nav-link')[1])">Enroll Your Business</button>
+          <button class="btn-hero-secondary" onclick="showPage('matches',document.querySelectorAll('.nav-link')[2])">See Matched Contracts</button>
+        </div>
+      </div>
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="stat-card-val">$183B+</div>
+          <div class="stat-card-label">Federal prime contracts awarded to small businesses annually (FY2024)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-val">95%+</div>
+          <div class="stat-card-label">of U.S. Gulf deepwater oil production runs through Port Fourchon, Lafourche</div>
+        </div>
+        <div class="stat-card accent">
+          <div class="stat-card-val">3 / 100</div>
+          <div class="stat-card-label">Health Insurance IGS Score — was 92 in 2020. This is the problem we are solving.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="landing-body">
+    <div class="container">
+      <div class="section-head" style="margin-bottom:20px">How the system works</div>
+      <div class="features-grid">
+        <div class="feature-card" style="border-top:3px solid var(--navy)">
+          <div class="feature-icon" style="background:var(--navy-light)">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="var(--navy)"><path d="M9 4a5 5 0 100 10A5 5 0 009 4zm-7 5a7 7 0 1112.32 4.67l3.5 3.5-1.41 1.41-3.5-3.5A7 7 0 012 9z"/></svg>
+          </div>
+          <div class="feature-title">RFP Matching</div>
+          <div class="feature-desc">An AI engine scans SAM.gov and Louisiana's LaPAC portal weekly, surfacing the top 5 contracts matched to each business by NAICS code, capability, and contract size.</div>
+        </div>
+        <div class="feature-card" style="border-top:3px solid var(--teal)">
+          <div class="feature-icon" style="background:var(--teal-light)">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="var(--teal)"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm1 11H9V9h2v4zm0-6H9V5h2v2z"/></svg>
+          </div>
+          <div class="feature-title">Bid Readiness Guidance</div>
+          <div class="feature-desc">Businesses see exactly which documents they have, which they are missing, and how to get each one — so no application stalls because of paperwork.</div>
+        </div>
+        <div class="feature-card" style="border-top:3px solid var(--amber)">
+          <div class="feature-icon" style="background:var(--amber-light)">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="var(--amber)"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM2 8a2 2 0 114 0A2 2 0 012 8zm2 6a6 6 0 0112 0H4z"/></svg>
+          </div>
+          <div class="feature-title">Fractional RFP Consortiums</div>
+          <div class="feature-desc">For contracts above $500K, the system assembles 6–8 businesses into a formal consortium bid — distributing contract scope and revenue across the community.</div>
+        </div>
+      </div>
+
+      <div class="card" style="border-left:4px solid var(--red)">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:20px;align-items:center">
+          <div>
+            <div style="font-size:11px;font-weight:600;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;margin-bottom:6px">The Problem</div>
+            <div style="font-size:28px;font-weight:600;color:var(--red)">IGS Score: 36</div>
+            <div style="font-size:12px;color:var(--muted)">58th of 64 Louisiana parishes</div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:600;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Health Coverage</div>
+            <div style="font-size:28px;font-weight:600;color:var(--red)">92 → 3</div>
+            <div style="font-size:12px;color:var(--muted)">97% collapse since 2020</div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:600;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Labor Market</div>
+            <div style="font-size:28px;font-weight:600;color:var(--amber)">57 → 9</div>
+            <div style="font-size:12px;color:var(--muted)">84% workforce disengagement</div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:600;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Our Target</div>
+            <div style="font-size:28px;font-weight:600;color:var(--teal)">36 → 62</div>
+            <div style="font-size:12px;color:var(--muted)">IGS by 2030 — state parity</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE 2 — ONBOARDING ══════════════ -->
+<div id="page-onboard" class="page">
+  <div class="container onboard-wrap">
+    <div style="margin-bottom:24px">
+      <h1 style="font-size:22px;font-weight:600;margin-bottom:4px">Business Enrollment</h1>
+      <p style="color:var(--muted);font-size:13px">Complete your profile to start receiving matched contract opportunities.</p>
+    </div>
+
+    <div class="progress-bar">
+      <div class="prog-step">
+        <div class="prog-dot active" id="dot-1">1</div>
+        <span class="prog-label active" id="lbl-1">Business Profile</span>
+      </div>
+      <div class="prog-line" id="line-1"></div>
+      <div class="prog-step">
+        <div class="prog-dot" id="dot-2">2</div>
+        <span class="prog-label" id="lbl-2">Connect Integrations</span>
+      </div>
+      <div class="prog-line" id="line-2"></div>
+      <div class="prog-step">
+        <div class="prog-dot" id="dot-3">3</div>
+        <span class="prog-label" id="lbl-3">Capability Statement</span>
+      </div>
+      <div class="prog-line" id="line-3"></div>
+      <div class="prog-step">
+        <div class="prog-dot" id="dot-4">4</div>
+        <span class="prog-label" id="lbl-4">Profile Complete</span>
+      </div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="onboard-step active card" id="step-1">
+      <h3 style="font-size:15px;font-weight:600;margin-bottom:16px">Step 1 — Business Profile</h3>
+      <div class="onboard-grid">
+        <div class="form-group"><label>Business Name</label><input type="text" value="Bayou Marine Fabrication LLC" placeholder="Business name"></div>
+        <div class="form-group"><label>Owner Name</label><input type="text" value="James Boudreaux" placeholder="Owner name"></div>
+        <div class="form-group"><label>NAICS Code</label>
+          <select>
+            <option>3366 — Shipbuilding & boat building</option>
+            <option>2382 — Plumbing, HVAC contractors</option>
+            <option>2373 — Highway & street construction</option>
+            <option>4883 — Water transport support</option>
+            <option>2131 — Oil & gas support services</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Number of Employees</label><input type="text" value="18" placeholder="e.g. 18"></div>
+        <div class="form-group"><label>Annual Revenue Range</label>
+          <select><option>$500K – $1M</option><option>$1M – $2.5M</option><option>$2.5M – $5M</option></select>
+        </div>
+        <div class="form-group"><label>Years in Operation</label><input type="text" value="12" placeholder="Years"></div>
+      </div>
+      <div class="form-group">
+        <label>Service Area</label>
+        <div class="checkbox-group">
+          <span class="check-chip checked" onclick="this.classList.toggle('checked')">Lafourche Parish</span>
+          <span class="check-chip checked" onclick="this.classList.toggle('checked')">Terrebonne Parish</span>
+          <span class="check-chip checked" onclick="this.classList.toggle('checked')">Gulf Corridor</span>
+          <span class="check-chip" onclick="this.classList.toggle('checked')">Statewide</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Business Certifications</label>
+        <div class="checkbox-group">
+          <span class="check-chip checked" onclick="this.classList.toggle('checked')">Small Business</span>
+          <span class="check-chip" onclick="this.classList.toggle('checked')">HUBZone</span>
+          <span class="check-chip" onclick="this.classList.toggle('checked')">Woman-Owned (WOSB)</span>
+          <span class="check-chip" onclick="this.classList.toggle('checked')">Veteran-Owned</span>
+          <span class="check-chip" onclick="this.classList.toggle('checked')">8(a) Program</span>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-top:8px">
+        <button class="btn-primary" onclick="goStep(2)">Continue →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="onboard-step card" id="step-2">
+      <h3 style="font-size:15px;font-weight:600;margin-bottom:6px">Step 2 — Connect Business Integrations</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:18px">Connect your existing tools so the system can extract your business context automatically.</p>
+      <div class="integrations-grid">
+        <div class="integration-card"><div class="int-left"><div class="int-logo" style="background:#f97316">G</div><div><div class="int-name">Gusto</div><div class="int-desc">Payroll & employees</div></div></div><button class="btn-connect connected" onclick="toggleConnect(this)">Connected ✓</button></div>
+        <div class="integration-card"><div class="int-left"><div class="int-logo" style="background:#2ca01c">QB</div><div><div class="int-name">QuickBooks</div><div class="int-desc">Financials & revenue</div></div></div><button class="btn-connect connected" onclick="toggleConnect(this)">Connected ✓</button></div>
+        <div class="integration-card"><div class="int-left"><div class="int-logo" style="background:#00a1e0">SF</div><div><div class="int-name">Salesforce</div><div class="int-desc">Client & past performance</div></div></div><button class="btn-connect" onclick="toggleConnect(this)">Connect</button></div>
+        <div class="integration-card"><div class="int-left"><div class="int-logo" style="background:#1b3a6b">SAM</div><div><div class="int-name">SAM.gov</div><div class="int-desc">Federal registration</div></div></div><button class="btn-connect connected" onclick="toggleConnect(this)">Connected ✓</button></div>
+        <div class="integration-card"><div class="int-left"><div class="int-logo" style="background:#f59f0a">DS</div><div><div class="int-name">DocuSign</div><div class="int-desc">Contracts & compliance</div></div></div><button class="btn-connect" onclick="toggleConnect(this)">Connect</button></div>
+        <div class="integration-card"><div class="int-left"><div class="int-logo" style="background:#4285f4">GD</div><div><div class="int-name">Google Drive</div><div class="int-desc">Documents & certs</div></div></div><button class="btn-connect connected" onclick="toggleConnect(this)">Connected ✓</button></div>
+      </div>
+      <div style="border-top:1px solid var(--border);padding-top:16px;margin-top:4px">
+        <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Don't use these tools? Upload your documents directly.</p>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+          <div style="border:1.5px dashed var(--border);border-radius:7px;padding:12px;text-align:center;font-size:12px;color:var(--muted);cursor:pointer">📄 Business License</div>
+          <div style="border:1.5px dashed var(--border);border-radius:7px;padding:12px;text-align:center;font-size:12px;color:var(--muted);cursor:pointer">📋 Capability Statement</div>
+          <div style="border:1.5px dashed var(--border);border-radius:7px;padding:12px;text-align:center;font-size:12px;color:var(--muted);cursor:pointer">📊 Financial Statements</div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:16px">
+        <button class="btn-secondary" onclick="goStep(1)">← Back</button>
+        <button class="btn-primary" onclick="goStep(3)">Continue →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="onboard-step card" id="step-3">
+      <h3 style="font-size:15px;font-weight:600;margin-bottom:6px">Step 3 — Capability Statement Builder</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:18px">Build your capability statement — this is what the matching engine uses to find your best contracts.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+        <div>
+          <div class="form-group"><label>Core Competencies</label>
+            <div class="checkbox-group">
+              <span class="check-chip checked" onclick="this.classList.toggle('checked')">Welding</span>
+              <span class="check-chip checked" onclick="this.classList.toggle('checked')">Fabrication</span>
+              <span class="check-chip checked" onclick="this.classList.toggle('checked')">Marine installation</span>
+              <span class="check-chip" onclick="this.classList.toggle('checked')">Electrical</span>
+              <span class="check-chip checked" onclick="this.classList.toggle('checked')">Emergency repair</span>
+              <span class="check-chip" onclick="this.classList.toggle('checked')">Inspection</span>
+            </div>
+          </div>
+          <div class="form-group"><label>Equipment Owned</label><textarea style="height:70px" placeholder="List key equipment...">2× MIG welders, pipe bending equipment, crane (5-ton), dive support vessel, offshore support skiff</textarea></div>
+          <div class="form-group"><label>Past Project Types</label><textarea style="height:70px" placeholder="Describe past work...">Offshore platform structural repairs, vessel hull fabrication, pipeline support structures, dock and pier construction</textarea></div>
+        </div>
+        <div style="background:#f9f8f5;border-radius:var(--radius);padding:16px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;margin-bottom:10px">Live Preview</div>
+          <div style="font-size:13px;line-height:1.7;color:var(--text)">
+            <strong>Bayou Marine Fabrication LLC</strong> is a Lafourche Parish-based marine fabrication and structural repair contractor with 12 years of Gulf Coast experience. Core competencies include welding, fabrication, marine installation, and emergency repair services.<br><br>
+            The company operates from Lafourche Parish with service coverage across Terrebonne Parish and the Gulf support corridor. Equipment includes 2× MIG welders, 5-ton crane, dive support vessel, and offshore support skiff.<br><br>
+            <span style="color:var(--muted);font-size:12px">Past performance: offshore platform repair, vessel hull fabrication, pipeline support structures.</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:16px">
+        <button class="btn-secondary" onclick="goStep(2)">← Back</button>
+        <button class="btn-primary" onclick="goStep(4)">Complete Profile →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="onboard-step card" id="step-4">
+      <h3 style="font-size:15px;font-weight:600;margin-bottom:4px">Profile Complete — Bayou Marine Fabrication LLC</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:20px">Your bid readiness score based on what we found in your connected systems.</p>
+      <div class="readiness-meter">
+        <div class="meter-wrap">
+          <svg class="meter-svg" viewBox="0 0 180 90"><path d="M20 85 A70 70 0 0 1 160 85" stroke="#e5e7eb" stroke-width="12" fill="none" stroke-linecap="round"/><path d="M20 85 A70 70 0 0 1 160 85" stroke="#c47d1e" stroke-width="12" fill="none" stroke-linecap="round" stroke-dasharray="220" stroke-dashoffset="62"/></svg>
+          <div class="meter-val">72%</div>
+        </div>
+        <div style="font-size:12px;color:var(--muted)">Bid Readiness Score</div>
+      </div>
+      <div class="readiness-lists">
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--teal);margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid var(--teal)">What you have ready</div>
+          <ul class="check-list">
+            <li><span class="check-icon ok">✓</span> SAM.gov registration active</li>
+            <li><span class="check-icon ok">✓</span> Small Business certification</li>
+            <li><span class="check-icon ok">✓</span> Payroll data connected (Gusto)</li>
+            <li><span class="check-icon ok">✓</span> Service area defined</li>
+            <li><span class="check-icon ok">✓</span> Business license on file</li>
+          </ul>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid var(--amber)">What is missing</div>
+          <ul class="check-list">
+            <li><span class="check-icon warn">!</span> Capability statement needs updating</li>
+            <li><span class="check-icon warn">!</span> Bonding documentation not uploaded</li>
+            <li><span class="check-icon warn">!</span> HUBZone eligibility not reviewed</li>
+            <li><span class="check-icon warn">!</span> Only 1 of 3 past performance refs on file</li>
+          </ul>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:20px">
+        <button class="btn-primary" onclick="showPage('matches',document.querySelectorAll('.nav-link')[2])">Find My Matched Contracts →</button>
+        <button class="btn-secondary" onclick="showPage('readiness',document.querySelectorAll('.nav-link')[4])">View Full Readiness Plan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE 3 — MATCHES ══════════════ -->
+<div id="page-matches" class="page">
+  <div class="container">
+    <div class="matches-layout">
+      <div class="filters-panel">
+        <div class="filter-title">Filter Opportunities</div>
+        <div class="filter-group">
+          <label>Source</label>
+          <div class="filter-pills">
+            <button class="fpill active" onclick="toggleFilter(this)">All Sources</button>
+            <button class="fpill" onclick="toggleFilter(this)">SAM.gov (Federal)</button>
+            <button class="fpill" onclick="toggleFilter(this)">LaPAC (Louisiana)</button>
+            <button class="fpill" onclick="toggleFilter(this)">Prime Network</button>
+          </div>
+        </div>
+        <div class="filter-group">
+          <label>Set-Aside Type</label>
+          <div class="filter-pills">
+            <button class="fpill active" onclick="toggleFilter(this)">All Types</button>
+            <button class="fpill" onclick="toggleFilter(this)">Small Business</button>
+            <button class="fpill" onclick="toggleFilter(this)">HUBZone</button>
+            <button class="fpill" onclick="toggleFilter(this)">WOSB</button>
+          </div>
+        </div>
+        <div class="filter-group">
+          <label>Fit Score</label>
+          <div class="filter-pills">
+            <button class="fpill active" onclick="toggleFilter(this)">70%+ Match</button>
+            <button class="fpill" onclick="toggleFilter(this)">85%+ Match</button>
+          </div>
+        </div>
+        <div class="filter-group">
+          <label>Contract Value</label>
+          <div class="filter-pills">
+            <button class="fpill active" onclick="toggleFilter(this)">All Values</button>
+            <button class="fpill" onclick="toggleFilter(this)">Under $500K</button>
+            <button class="fpill" onclick="toggleFilter(this)">$500K – $2M</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="matches-main">
+        <div class="matches-header">
+          <div>
+            <h2>Matched Opportunities</h2>
+            <p>Bayou Marine Fabrication LLC · Updated today</p>
+          </div>
+          <button class="btn-secondary btn-sm">Sort: Fit Score ↓</button>
+        </div>
+        <div class="result-count"><strong>14 contracts</strong> matched this week · Showing top 4</div>
+
+        <!-- CARD 1 -->
+        <div class="opp-card selected">
+          <div class="opp-top">
+            <div class="opp-badges">
+              <span class="badge badge-navy">SAM.gov</span>
+              <span class="badge badge-teal">Small Business Set-Aside</span>
+            </div>
+            <div class="fit-ring fit-93">93%</div>
+          </div>
+          <div class="opp-title">Coastal Facility Maintenance & Repair Support</div>
+          <div class="opp-meta">
+            <span class="meta-item">U.S. Army Corps of Engineers</span>
+            <span class="meta-item">Due Apr 18, 2026</span>
+            <span class="value-tag">$250K–$1.2M</span>
+          </div>
+          <div class="ai-reason">Your fabrication, welding, and marine field support capabilities directly match the scope requirements. Local mobilization advantage.</div>
+          <div class="doc-readiness">
+            <div>
+              <div class="doc-col-title" style="color:var(--teal)">Documents you have</div>
+              <div class="doc-item"><span class="doc-dot ok">✓</span>SAM.gov registration active</div>
+              <div class="doc-item"><span class="doc-dot ok">✓</span>Business license</div>
+              <div class="doc-item"><span class="doc-dot ok">✓</span>Insurance certificate</div>
+            </div>
+            <div>
+              <div class="doc-col-title" style="color:var(--red)">Still needed</div>
+              <div class="doc-item"><span class="doc-dot missing">✗</span>Bonding documentation <a class="doc-link" href="#">How to get →</a></div>
+              <div class="doc-item"><span class="doc-dot missing">✗</span>SF-1403 past performance <a class="doc-link" href="#">Download →</a></div>
+            </div>
+          </div>
+          <div class="opp-actions">
+            <button class="btn-primary btn-sm">Start Application</button>
+            <button class="btn-secondary btn-sm">Save for Later</button>
+          </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="opp-card">
+          <div class="opp-top">
+            <div class="opp-badges">
+              <span class="badge badge-amber">Louisiana LaPAC</span>
+              <span class="badge" style="background:#f3f4f6;color:#6b7280">Open Bid</span>
+            </div>
+            <div class="fit-ring fit-88">88%</div>
+          </div>
+          <div class="opp-title">Public Works Equipment Maintenance Services</div>
+          <div class="opp-meta">
+            <span class="meta-item">Lafourche Parish Government</span>
+            <span class="meta-item">Due May 2, 2026</span>
+            <span class="value-tag">$75K–$400K</span>
+          </div>
+          <div class="ai-reason">Strong overlap with rapid-response maintenance, repair crews, and local mobilization capacity for parish-level work.</div>
+          <div class="doc-readiness">
+            <div>
+              <div class="doc-col-title" style="color:var(--teal)">Documents you have</div>
+              <div class="doc-item"><span class="doc-dot ok">✓</span>Business license</div>
+              <div class="doc-item"><span class="doc-dot ok">✓</span>Capability statement</div>
+              <div class="doc-item"><span class="doc-dot ok">✓</span>Insurance certificate</div>
+            </div>
+            <div>
+              <div class="doc-col-title" style="color:var(--red)">Still needed</div>
+              <div class="doc-item"><span class="doc-dot missing">✗</span>Louisiana vendor registration <a class="doc-link" href="#">Register free →</a></div>
+              <div class="doc-item"><span class="doc-dot missing">✗</span>W-9 tax form <a class="doc-link" href="#">Download →</a></div>
+            </div>
+          </div>
+          <div class="opp-actions">
+            <button class="btn-primary btn-sm">Start Application</button>
+            <button class="btn-secondary btn-sm">Save for Later</button>
+          </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="opp-card">
+          <div class="opp-top">
+            <div class="opp-badges">
+              <span class="badge badge-navy">SAM.gov</span>
+              <span class="badge badge-amber">HUBZone Set-Aside</span>
+            </div>
+            <div class="fit-ring fit-84">84%</div>
+          </div>
+          <div class="opp-title">Gulf Coast Infrastructure Inspection Services</div>
+          <div class="opp-meta">
+            <span class="meta-item">Dept. of Transportation</span>
+            <span class="meta-item">Due May 15, 2026</span>
+            <span class="value-tag">$180K–$800K</span>
+          </div>
+          <div class="ai-reason">Equipment availability and coastal service area are strong fits. HUBZone certification would unlock this set-aside.</div>
+          <div class="doc-readiness">
+            <div>
+              <div class="doc-col-title" style="color:var(--teal)">Documents you have</div>
+              <div class="doc-item"><span class="doc-dot ok">✓</span>Equipment inventory</div>
+              <div class="doc-item"><span class="doc-dot ok">✓</span>NAICS code match</div>
+            </div>
+            <div>
+              <div class="doc-col-title" style="color:var(--red)">Still needed</div>
+              <div class="doc-item"><span class="doc-dot missing">✗</span>HUBZone certification <a class="doc-link" href="#">Apply at SBA.gov →</a></div>
+              <div class="doc-item"><span class="doc-dot missing">✗</span>Inspection certification <a class="doc-link" href="#">How to get →</a></div>
+            </div>
+          </div>
+          <div class="opp-actions">
+            <button class="btn-primary btn-sm">Start Application</button>
+            <button class="btn-secondary btn-sm">Save for Later</button>
+          </div>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="opp-card">
+          <div class="opp-top">
+            <div class="opp-badges">
+              <span class="badge badge-teal">Prime Network</span>
+              <span class="badge" style="background:#f3f4f6;color:#6b7280">Subcontracting</span>
+            </div>
+            <div class="fit-ring fit-79">79%</div>
+          </div>
+          <div class="opp-title">Offshore Logistics Subcontracting Package</div>
+          <div class="opp-meta">
+            <span class="meta-item">Energy Supply Chain Partner</span>
+            <span class="meta-item">Rolling · Open now</span>
+            <span class="value-tag">$100K–$600K</span>
+          </div>
+          <div class="ai-reason">Best near-term path while bonding and certification readiness improves. Strong NAICS and scope alignment.</div>
+          <div class="doc-readiness">
+            <div>
+              <div class="doc-col-title" style="color:var(--teal)">Documents you have</div>
+              <div class="doc-item"><span class="doc-dot ok">✓</span>Capability statement</div>
+              <div class="doc-item"><span class="doc-dot ok">✓</span>NAICS code match</div>
+            </div>
+            <div>
+              <div class="doc-col-title" style="color:var(--red)">Still needed</div>
+              <div class="doc-item"><span class="doc-dot missing">✗</span>Teaming agreement <a class="doc-link" href="#">Get template →</a></div>
+            </div>
+          </div>
+          <div class="opp-actions">
+            <button class="btn-teal btn-sm">Explore Fit</button>
+            <button class="btn-secondary btn-sm">Save for Later</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE 4 — FRACTIONAL RFP ══════════════ -->
+<div id="page-fractional" class="page">
+  <div class="container frac-wrap">
+    <div style="margin-bottom:20px">
+      <h1 style="font-size:22px;font-weight:600;margin-bottom:4px">Fractional RFP — Consortium Bidding</h1>
+      <p style="font-size:13px;color:var(--muted)">For contracts above $500,000 where no single business qualifies alone. Your business is part of a coordinated team bid.</p>
+    </div>
+
+    <div class="contract-banner">
+      <div class="cb-left">
+        <h2>FEMA Coastal Resilience Infrastructure Program</h2>
+        <div class="cb-meta">
+          <span><strong>$2.4M</strong> total contract</span>
+          <span>SAM.gov</span>
+          <span>Deadline: <strong>May 30, 2026</strong></span>
+          <span>Federal / Small Business Required</span>
+        </div>
+      </div>
+      <div class="cb-status">Consortium forming · 6 of 8 slots filled</div>
+    </div>
+
+    <div class="frac-layout">
+      <div class="your-scope">
+        <h3>Your Scope</h3>
+        <p class="biz-name">Bayou Marine Fabrication LLC</p>
+        <div class="scope-detail">
+          <div class="scope-type">Structural fabrication & marine installation</div>
+          <div class="scope-val">$380,000</div>
+          <div class="scope-sub">of the $2.4M total contract</div>
+        </div>
+        <div>
+          <div class="prog-label-row"><span style="font-size:12px;color:var(--muted)">Scope readiness</span><span style="font-size:12px;font-weight:600;color:var(--teal)">67%</span></div>
+          <div class="prog-bar-track"><div class="prog-bar-fill" style="width:67%"></div></div>
+        </div>
+        <div style="margin-bottom:14px">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.4px;color:var(--muted);text-transform:uppercase;margin-bottom:7px">Documents for your scope</div>
+          <ul class="check-list">
+            <li><span class="check-icon ok">✓</span>Fabrication certifications</li>
+            <li><span class="check-icon ok">✓</span>Equipment availability statement</li>
+            <li><span class="check-icon warn">!</span>Subcontractor agreement — pending signature</li>
+          </ul>
+        </div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:.4px;color:var(--muted);text-transform:uppercase;margin-bottom:7px">Prime Contractor Contact</div>
+        <div class="contact-card">
+          <div class="contact-avatar">TL</div>
+          <div>
+            <div style="font-size:13px;font-weight:600">Thibodaux Construction LLC</div>
+            <div style="font-size:11px;color:var(--muted)">Prime contractor · (985) 447-0012</div>
+          </div>
+        </div>
+        <button class="btn-primary" style="width:100%;margin-top:14px">Sign My Subcontractor Agreement</button>
+      </div>
+
+      <div class="consortium-table-wrap">
+        <h3>Full Consortium</h3>
+        <p>8-business team · $2.4M total contract value</p>
+        <table class="ctable">
+          <thead><tr><th>Business</th><th>Scope</th><th>Value</th><th>Ready</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr class="you">
+              <td><strong>Bayou Marine Fab. (YOU)</strong></td>
+              <td>Fabrication & installation</td>
+              <td><span style="font-family:var(--mono);font-size:11px">$380K</span></td>
+              <td><div style="font-size:11px;font-weight:600;color:var(--amber)">67%</div><div class="readiness-mini"><div class="readiness-mini-fill" style="width:67%;background:var(--amber)"></div></div></td>
+              <td><span class="status-chip status-active">Active</span></td>
+            </tr>
+            <tr>
+              <td>Thibodaux Construction LLC</td>
+              <td>Site preparation</td>
+              <td><span style="font-family:var(--mono);font-size:11px">$310K</span></td>
+              <td><div style="font-size:11px;font-weight:600;color:var(--teal)">91%</div><div class="readiness-mini"><div class="readiness-mini-fill" style="width:91%"></div></div></td>
+              <td><span class="status-chip status-confirmed">Confirmed ✓</span></td>
+            </tr>
+            <tr>
+              <td>Gulf Coast Electric</td>
+              <td>Electrical systems</td>
+              <td><span style="font-family:var(--mono);font-size:11px">$290K</span></td>
+              <td><div style="font-size:11px;font-weight:600;color:var(--teal)">85%</div><div class="readiness-mini"><div class="readiness-mini-fill" style="width:85%"></div></div></td>
+              <td><span class="status-chip status-confirmed">Confirmed ✓</span></td>
+            </tr>
+            <tr>
+              <td>Lafourche Logistics Co.</td>
+              <td>Equipment transport</td>
+              <td><span style="font-family:var(--mono);font-size:11px">$260K</span></td>
+              <td><div style="font-size:11px;font-weight:600;color:var(--teal)">78%</div><div class="readiness-mini"><div class="readiness-mini-fill" style="width:78%"></div></div></td>
+              <td><span class="status-chip status-confirmed">Confirmed ✓</span></td>
+            </tr>
+            <tr>
+              <td>Delta Welding Services</td>
+              <td>Structural welding</td>
+              <td><span style="font-family:var(--mono);font-size:11px">$340K</span></td>
+              <td><div style="font-size:11px;font-weight:600;color:var(--teal)">82%</div><div class="readiness-mini"><div class="readiness-mini-fill" style="width:82%"></div></div></td>
+              <td><span class="status-chip status-confirmed">Confirmed ✓</span></td>
+            </tr>
+            <tr>
+              <td>South LA Inspection</td>
+              <td>Quality assurance</td>
+              <td><span style="font-family:var(--mono);font-size:11px">$220K</span></td>
+              <td><div style="font-size:11px;font-weight:600;color:var(--teal)">95%</div><div class="readiness-mini"><div class="readiness-mini-fill" style="width:95%"></div></div></td>
+              <td><span class="status-chip status-confirmed">Confirmed ✓</span></td>
+            </tr>
+            <tr class="open">
+              <td>[Open Slot]</td>
+              <td>Drainage engineering</td>
+              <td><span style="font-family:var(--mono);font-size:11px">$300K</span></td>
+              <td>—</td>
+              <td><span class="status-chip status-open">Recruiting</span></td>
+            </tr>
+            <tr class="open">
+              <td>[Open Slot]</td>
+              <td>Environmental compliance</td>
+              <td><span style="font-family:var(--mono);font-size:11px">$300K</span></td>
+              <td>—</td>
+              <td><span class="status-chip status-open">Recruiting</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="fed-note">Federal Acquisition Regulation Part 19 requires prime contractors above $700,000 to subcontract to small businesses. This consortium fulfills that requirement — Lafourche businesses are the mandated pipeline.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PAGE 5 — READINESS ══════════════ -->
+<div id="page-readiness" class="page">
+  <div class="container readiness-wrap">
+    <div style="margin-bottom:20px">
+      <h1 style="font-size:22px;font-weight:600;margin-bottom:4px">Bid Readiness Program</h1>
+      <p style="font-size:13px;color:var(--muted)">Know exactly where you stand — and exactly what to fix.</p>
+    </div>
+
+    <div class="readiness-top">
+      <div class="score-card">
+        <h3>Bayou Marine Fabrication LLC</h3>
+        <p>Bid Readiness Score</p>
+        <div class="big-gauge">
+          <svg viewBox="0 0 160 80" style="width:100%;height:100%"><path d="M15 75 A60 60 0 0 1 145 75" stroke="#e5e7eb" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M15 75 A60 60 0 0 1 145 75" stroke="#c47d1e" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="188" stroke-dashoffset="53"/></svg>
+          <div class="gauge-val">72</div>
+        </div>
+        <div class="gauge-pct">out of 100</div>
+        <div style="background:var(--amber-light);border-radius:7px;padding:8px 12px;font-size:12px;color:var(--amber);font-weight:500">Improving — 3 actions to reach 85%</div>
+      </div>
+
+      <div class="card">
+        <div class="status-cols">
+          <div class="status-col green">
+            <h4>Strong</h4>
+            <ul class="check-list">
+              <li><span class="check-icon ok">✓</span>SAM.gov registration</li>
+              <li><span class="check-icon ok">✓</span>NAICS codes filed</li>
+              <li><span class="check-icon ok">✓</span>Business license current</li>
+              <li><span class="check-icon ok">✓</span>Insurance certificates</li>
+              <li><span class="check-icon ok">✓</span>Payroll records connected</li>
+            </ul>
+          </div>
+          <div class="status-col amber">
+            <h4>Needs Attention</h4>
+            <ul class="check-list">
+              <li><span class="check-icon warn">!</span>Capability statement outdated (18 months)</li>
+              <li><span class="check-icon warn">!</span>No bonding documentation on file</li>
+              <li><span class="check-icon warn">!</span>Only 1 of 3 past performance refs</li>
+            </ul>
+          </div>
+          <div class="status-col red">
+            <h4>Blockers</h4>
+            <ul class="check-list">
+              <li><span class="check-icon block">✗</span>HUBZone certification not started</li>
+              <li><span class="check-icon block">✗</span>SF-1403 form never filed</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-plan">
+      <h3>Your 30-day readiness plan</h3>
+      <div class="actions-grid">
+        <div class="action-card">
+          <div class="action-priority">Priority 1</div>
+          <div class="action-title">Update capability statement</div>
+          <div class="action-meta">
+            <span>⏱ 2–3 hours</span>
+            <span class="impact-badge">+8 readiness points</span>
+          </div>
+          <button class="btn-secondary btn-sm" onclick="showPage('onboard',document.querySelectorAll('.nav-link')[1]);setTimeout(()=>goStep(3),100)">Open statement builder →</button>
+        </div>
+        <div class="action-card">
+          <div class="action-priority">Priority 2</div>
+          <div class="action-title">Request bonding documentation</div>
+          <div class="action-meta">
+            <span>📧 Contact broker</span>
+            <span class="impact-badge">+12 readiness points</span>
+          </div>
+          <button class="btn-secondary btn-sm">Email template →</button>
+        </div>
+        <div class="action-card">
+          <div class="action-priority">Priority 3</div>
+          <div class="action-title">Add 2 more past performance references</div>
+          <div class="action-meta">
+            <span>📄 Request from clients</span>
+            <span class="impact-badge">+9 readiness points</span>
+          </div>
+          <button class="btn-secondary btn-sm">Download SF-1403 →</button>
+        </div>
+        <div class="action-card">
+          <div class="action-priority">Priority 4</div>
+          <div class="action-title">Review HUBZone eligibility</div>
+          <div class="action-meta">
+            <span>⏱ 15 minutes</span>
+            <span class="impact-badge">Unlocks set-aside contracts</span>
+          </div>
+          <button class="btn-secondary btn-sm">Check eligibility at SBA.gov →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="advisor-section">
+      <h3>Advisor Support</h3>
+      <div class="advisor-grid">
+        <div class="advisor-card" style="border-top:3px solid var(--teal)">
+          <div class="advisor-label" style="color:var(--teal)">
+            <span style="width:8px;height:8px;background:var(--teal);border-radius:50%;display:inline-block"></span>
+            CDFI Partner
+          </div>
+          <div class="advisor-org">Blueprint Investment Fund</div>
+          <ul class="advisor-items">
+            <li>Working capital assessment</li>
+            <li>Equipment financing options</li>
+            <li>Bridge funding for contract mobilization</li>
+            <li>SBA 7(a) loan facilitation</li>
+          </ul>
+          <button class="btn-teal btn-sm" style="margin-top:12px;width:100%">Schedule a call</button>
+        </div>
+        <div class="advisor-card" style="border-top:3px solid var(--navy)">
+          <div class="advisor-label" style="color:var(--navy)">
+            <span style="width:8px;height:8px;background:var(--navy);border-radius:50%;display:inline-block"></span>
+            SBA / APEX Support
+          </div>
+          <div class="advisor-org">Louisiana APEX Accelerator</div>
+          <ul class="advisor-items">
+            <li>SAM.gov registration guidance</li>
+            <li>Certification pathway planning</li>
+            <li>Proposal review sessions</li>
+            <li>Bid strategy and pricing coaching</li>
+          </ul>
+          <button class="btn-primary btn-sm" style="margin-top:12px;width:100%">Book a session</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+
+function goStep(n) {
+  document.querySelectorAll('.onboard-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step-' + n).classList.add('active');
+  for (let i = 1; i <= 4; i++) {
+    const dot = document.getElementById('dot-' + i);
+    const lbl = document.getElementById('lbl-' + i);
+    if (i < n) { dot.classList.add('done'); dot.classList.remove('active'); dot.textContent = '✓'; lbl.classList.remove('active'); }
+    else if (i === n) { dot.classList.add('active'); dot.classList.remove('done'); dot.textContent = i; lbl.classList.add('active'); }
+    else { dot.classList.remove('active','done'); dot.textContent = i; lbl.classList.remove('active'); }
+    if (i < 4) { const line = document.getElementById('line-' + i); if (i < n) line.classList.add('done'); else line.classList.remove('done'); }
+  }
+}
+
+function toggleConnect(btn) {
+  if (btn.classList.contains('connected')) { btn.classList.remove('connected'); btn.textContent = 'Connect'; }
+  else { btn.classList.add('connected'); btn.textContent = 'Connected ✓'; }
+}
+
+function toggleFilter(btn) {
+  const pills = btn.parentElement.querySelectorAll('.fpill');
+  pills.forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
