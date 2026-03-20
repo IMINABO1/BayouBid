@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BayouBid AI — From Contract Access to Healthcare Access</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: '#1A2B4D',
+            accent: '#FF8400',
+            bg: '#F2F3F0',
+            border: '#CBCCC9',
+            chip: '#E7E8E5',
+            txt: '#111111',
+            txtsec: '#666666',
+            warn: '#E9E3D8',
+            warntxt: '#804200',
+            cdfi: '#DFE6E1',
+            cdfitxt: '#004D1A',
+            sba: '#DFDFE6',
+            sbatxt: '#000066',
+            ok: '#22C55E',
+          },
+          fontFamily: {
+            heading: ['"Space Grotesk"', 'sans-serif'],
+            body: ['"Inter"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+            geist: ['"Geist"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #F2F3F0; margin: 0; }
+    .fade-up { opacity: 0; transform: translateY(24px); animation: fadeUp 0.6s ease-out forwards; }
+    .fade-up-delay-1 { animation-delay: 0.15s; }
+    .fade-up-delay-2 { animation-delay: 0.3s; }
+    .fade-up-delay-3 { animation-delay: 0.45s; }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: #CBCCC9; border-radius: 3px; }
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="min-h-screen">
+
+<!-- ==================== NAV ==================== -->
+<nav class="flex items-center justify-between bg-white h-[56px] px-4 md:px-8 border-b border-border w-full sticky top-0 z-50">
+  <div class="flex items-center gap-2.5">
+    <i data-lucide="anchor" class="w-7 h-7 text-accent"></i>
+    <span class="font-mono text-lg font-bold text-txt">BayouBid AI</span>
+  </div>
+  <button type="button" title="Toggle menu" id="menuToggle" onclick="document.getElementById('mobileMenu').classList.toggle('hidden')" class="md:hidden flex items-center justify-center w-8 h-8">
+    <i data-lucide="menu" class="w-6 h-6 text-txt"></i>
+  </button>
+  <div class="hidden md:flex items-center gap-8">
+    <a href="#how-it-works" class="text-sm font-mono text-txtsec hover:text-txt transition-colors">How It Works</a>
+    <a href="#impact" class="text-sm font-mono text-txtsec hover:text-txt transition-colors">Impact</a>
+    <a href="#recovery-chain" class="text-sm font-mono text-txtsec hover:text-txt transition-colors">Recovery Chain</a>
+    <a href="index.html" class="bg-accent hover:bg-orange-500 text-white font-mono text-sm font-semibold px-5 py-2 rounded-full transition-colors">
+      Launch Platform
+    </a>
+  </div>
+</nav>
+<!-- Mobile menu -->
+<div id="mobileMenu" class="hidden md:hidden bg-white border-b border-border px-4 py-3 flex flex-col gap-3 sticky top-[56px] z-50">
+  <a href="#how-it-works" class="text-sm font-mono text-txtsec hover:text-txt transition-colors">How It Works</a>
+  <a href="#impact" class="text-sm font-mono text-txtsec hover:text-txt transition-colors">Impact</a>
+  <a href="#recovery-chain" class="text-sm font-mono text-txtsec hover:text-txt transition-colors">Recovery Chain</a>
+  <a href="index.html" class="bg-accent hover:bg-orange-500 text-white font-mono text-sm font-semibold px-5 py-2 rounded-full transition-colors text-center">
+    Launch Platform
+  </a>
+</div>
+
+<!-- ==================== HERO ==================== -->
+<section class="bg-navy px-4 md:px-8 py-12 md:py-20 flex flex-col items-center text-center gap-6">
+  <div class="fade-up flex flex-col items-center gap-4 max-w-3xl">
+    <span class="font-mono text-xs font-semibold text-accent tracking-widest uppercase">Lafourche Business Recovery Initiative</span>
+    <h1 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+      From Contract Access<br>to Healthcare Access
+    </h1>
+    <p class="text-lg text-white/70 font-body max-w-2xl leading-relaxed">
+      AI-powered procurement matching that connects Gulf Coast small businesses to government contracts — creating jobs, restoring insurance coverage, and rebuilding community health.
+    </p>
+  </div>
+  <div class="fade-up fade-up-delay-1 flex flex-col sm:flex-row gap-3 sm:gap-4 mt-2 w-full sm:w-auto px-4 sm:px-0">
+    <a href="index.html" class="bg-accent hover:bg-orange-500 text-white font-mono text-sm font-semibold px-8 py-3 rounded-full transition-colors flex items-center justify-center gap-2">
+      <i data-lucide="zap" class="w-4 h-4"></i> Explore the Platform
+    </a>
+    <a href="#how-it-works" class="bg-white/10 hover:bg-white/20 text-white font-mono text-sm font-semibold px-8 py-3 rounded-full transition-colors border border-white/20 text-center">
+      See How It Works
+    </a>
+  </div>
+  <!-- Stat cards -->
+  <div class="fade-up fade-up-delay-2 grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mt-8 w-full max-w-4xl px-4 sm:px-0">
+    <div class="bg-white/10 backdrop-blur rounded-lg p-4 md:p-5 flex flex-col gap-1 border border-white/10">
+      <span class="font-heading text-2xl md:text-3xl font-bold text-accent">$637B</span>
+      <span class="text-xs text-white/60 font-body leading-snug">FY2024 small-business-eligible federal contracts</span>
+    </div>
+    <div class="bg-white/10 backdrop-blur rounded-lg p-4 md:p-5 flex flex-col gap-1 border border-white/10">
+      <span class="font-heading text-2xl md:text-3xl font-bold text-accent">$183B+</span>
+      <span class="text-xs text-white/60 font-body leading-snug">Awarded to small businesses in FY2024</span>
+    </div>
+    <div class="bg-white/10 backdrop-blur rounded-lg p-4 md:p-5 flex flex-col gap-1 border border-white/10">
+      <span class="font-heading text-2xl md:text-3xl font-bold text-accent">95%+</span>
+      <span class="text-xs text-white/60 font-body leading-snug">Gulf deepwater energy serviced via Port Fourchon</span>
+    </div>
+    <div class="bg-white/10 backdrop-blur rounded-lg p-4 md:p-5 flex flex-col gap-1 border border-white/10">
+      <span class="font-heading text-2xl md:text-3xl font-bold text-accent">12:1</span>
+      <span class="text-xs text-white/60 font-body leading-snug">Projected ROI on $2.5M pilot investment</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== THE PROBLEM ==================== -->
+<section class="px-4 md:px-8 py-10 md:py-16 max-w-5xl mx-auto flex flex-col gap-6">
+  <span class="font-mono text-xs font-semibold text-accent tracking-widest uppercase">The Problem</span>
+  <h2 class="font-heading text-2xl md:text-3xl font-bold text-txt">A community in crisis</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+    <div class="bg-white rounded-lg border border-border p-5 flex flex-col gap-3">
+      <div class="w-10 h-10 rounded-lg bg-red-50 flex items-center justify-center">
+        <i data-lucide="cloud-lightning" class="w-5 h-5 text-red-500"></i>
+      </div>
+      <span class="font-heading text-base font-semibold text-txt">COVID-19 + Hurricane Ida</span>
+      <p class="text-sm text-txtsec font-body leading-relaxed">Back-to-back disasters collapsed businesses across Lafourche Parish, devastating the local economy built around Port Fourchon.</p>
+    </div>
+    <div class="bg-white rounded-lg border border-border p-5 flex flex-col gap-3">
+      <div class="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center">
+        <i data-lucide="trending-down" class="w-5 h-5 text-accent"></i>
+      </div>
+      <span class="font-heading text-base font-semibold text-txt">Jobs Disappeared</span>
+      <p class="text-sm text-txtsec font-body leading-relaxed">Business closures wiped out W-2 employment — and with it, the employer-sponsored health insurance that families depended on.</p>
+    </div>
+    <div class="bg-white rounded-lg border border-border p-5 flex flex-col gap-3">
+      <div class="w-10 h-10 rounded-lg bg-red-50 flex items-center justify-center">
+        <i data-lucide="heart-off" class="w-5 h-5 text-red-500"></i>
+      </div>
+      <span class="font-heading text-base font-semibold text-txt">IGS Score: 36</span>
+      <p class="text-sm text-txtsec font-body leading-relaxed">Census Tract 22057 020600 sits at a critical IGS of 36. Our data shows a +0.81 Pearson correlation between Economy Score and Health Insurance Coverage.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== HOW IT WORKS ==================== -->
+<section id="how-it-works" class="bg-white px-4 md:px-8 py-10 md:py-16">
+  <div class="max-w-5xl mx-auto flex flex-col gap-10">
+    <div class="flex flex-col gap-2">
+      <span class="font-mono text-xs font-semibold text-accent tracking-widest uppercase">How It Works</span>
+      <h2 class="font-heading text-2xl md:text-3xl font-bold text-txt">AI-powered procurement, human-powered recovery</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="flex flex-col gap-3">
+        <div class="w-12 h-12 rounded-full bg-navy flex items-center justify-center">
+          <span class="font-mono text-lg font-bold text-accent">1</span>
+        </div>
+        <span class="font-heading text-sm font-semibold text-txt">Match</span>
+        <p class="text-sm text-txtsec font-body leading-relaxed">AI scans SAM.gov and Louisiana LaPAC daily, matching RFPs to each business by capability, NAICS codes, certifications, and location.</p>
+      </div>
+      <div class="flex flex-col gap-3">
+        <div class="w-12 h-12 rounded-full bg-navy flex items-center justify-center">
+          <span class="font-mono text-lg font-bold text-accent">2</span>
+        </div>
+        <span class="font-heading text-sm font-semibold text-txt">Prepare</span>
+        <p class="text-sm text-txtsec font-body leading-relaxed">AI drafts capability statements and proposal sections. Advisors provide bid coaching, compliance support, and readiness checklists.</p>
+      </div>
+      <div class="flex flex-col gap-3">
+        <div class="w-12 h-12 rounded-full bg-navy flex items-center justify-center">
+          <span class="font-mono text-lg font-bold text-accent">3</span>
+        </div>
+        <span class="font-heading text-sm font-semibold text-txt">Fund</span>
+        <p class="text-sm text-txtsec font-body leading-relaxed">CDFI partners and SBA loan programs provide working capital and bridge funding so winners can actually deliver on contracts.</p>
+      </div>
+      <div class="flex flex-col gap-3">
+        <div class="w-12 h-12 rounded-full bg-navy flex items-center justify-center">
+          <span class="font-mono text-lg font-bold text-accent">4</span>
+        </div>
+        <span class="font-heading text-sm font-semibold text-txt">Consortium</span>
+        <p class="text-sm text-txtsec font-body leading-relaxed">For contracts over $500K, we assemble local business consortiums under teaming agreements to bid collectively on large opportunities.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== RECOVERY CHAIN ==================== -->
+<section id="recovery-chain" class="bg-navy px-4 md:px-8 py-10 md:py-14">
+  <div class="max-w-5xl mx-auto flex flex-col items-center gap-6">
+    <div class="flex flex-col items-center gap-2 text-center">
+      <span class="font-mono text-xs font-semibold text-accent tracking-widest uppercase">The Recovery Chain</span>
+      <h2 class="font-heading text-xl md:text-2xl font-bold text-white">Contracts create jobs. Jobs create insurance. Insurance creates health.</h2>
+    </div>
+    <div class="flex items-center gap-3 flex-wrap justify-center">
+      <div class="flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 border border-white/10">
+        <i data-lucide="target" class="w-5 h-5 text-white"></i>
+        <span class="font-mono text-sm font-medium text-white">Better-fit bids</span>
+      </div>
+      <i data-lucide="chevron-right" class="w-5 h-5 text-white/30"></i>
+      <div class="flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 border border-white/10">
+        <i data-lucide="send" class="w-5 h-5 text-white"></i>
+        <span class="font-mono text-sm font-medium text-white">More applications</span>
+      </div>
+      <i data-lucide="chevron-right" class="w-5 h-5 text-white/30"></i>
+      <div class="flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 border border-white/10">
+        <i data-lucide="trophy" class="w-5 h-5 text-accent"></i>
+        <span class="font-mono text-sm font-medium text-white">More contracts won</span>
+      </div>
+      <i data-lucide="chevron-right" class="w-5 h-5 text-white/30"></i>
+      <div class="flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 border border-white/10">
+        <i data-lucide="briefcase" class="w-5 h-5 text-white"></i>
+        <span class="font-mono text-sm font-medium text-white">Stable W-2 jobs</span>
+      </div>
+      <i data-lucide="chevron-right" class="w-5 h-5 text-white/30"></i>
+      <div class="flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 border border-white/10">
+        <i data-lucide="shield" class="w-5 h-5 text-white"></i>
+        <span class="font-mono text-sm font-medium text-white">Insurance coverage</span>
+      </div>
+      <i data-lucide="chevron-right" class="w-5 h-5 text-white/30"></i>
+      <div class="flex items-center gap-2 bg-accent/20 rounded-full px-4 py-2 border border-accent/30">
+        <i data-lucide="heart-pulse" class="w-5 h-5 text-ok"></i>
+        <span class="font-mono text-sm font-semibold text-ok">Healthcare access</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== IMPACT TARGETS ==================== -->
+<section id="impact" class="px-4 md:px-8 py-10 md:py-16">
+  <div class="max-w-5xl mx-auto flex flex-col gap-10">
+    <div class="flex flex-col gap-2">
+      <span class="font-mono text-xs font-semibold text-accent tracking-widest uppercase">Projected Impact</span>
+      <h2 class="font-heading text-2xl md:text-3xl font-bold text-txt">Measurable outcomes by 2030</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+      <div class="bg-white rounded-lg border border-border p-5 flex flex-col gap-2">
+        <span class="font-heading text-3xl font-bold text-navy">500+</span>
+        <span class="text-sm text-txtsec font-body">New W-2 jobs created in Lafourche Parish</span>
+      </div>
+      <div class="bg-white rounded-lg border border-border p-5 flex flex-col gap-2">
+        <span class="font-heading text-3xl font-bold text-navy">$10M+</span>
+        <span class="text-sm text-txtsec font-body">Annual government contracts secured by local businesses</span>
+      </div>
+      <div class="bg-white rounded-lg border border-border p-5 flex flex-col gap-2">
+        <span class="font-heading text-3xl font-bold text-navy">36 → 62</span>
+        <span class="text-sm text-txtsec font-body">Target IGS improvement for Census Tract 020600</span>
+      </div>
+      <div class="bg-white rounded-lg border border-border p-5 flex flex-col gap-2">
+        <span class="font-heading text-3xl font-bold text-navy">$2.5M</span>
+        <span class="text-sm text-txtsec font-body">Pilot investment with projected 12:1 ROI</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CTA ==================== -->
+<section class="bg-white px-4 md:px-8 py-10 md:py-16">
+  <div class="max-w-3xl mx-auto flex flex-col items-center text-center gap-6">
+    <i data-lucide="anchor" class="w-12 h-12 text-accent"></i>
+    <h2 class="font-heading text-2xl md:text-3xl font-bold text-txt">See the platform in action</h2>
+    <p class="text-base text-txtsec font-body leading-relaxed">
+      Explore how BayouBid AI matches real procurement opportunities from SAM.gov and Louisiana LaPAC to Lafourche Parish businesses — with AI-drafted proposals, readiness scoring, and advisor support built in.
+    </p>
+    <a href="index.html" class="bg-accent hover:bg-orange-500 text-white font-mono text-sm font-semibold px-8 py-3 rounded-full transition-colors flex items-center gap-2">
+      <i data-lucide="arrow-right" class="w-4 h-4"></i> Launch the Platform Demo
+    </a>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="bg-navy px-4 md:px-8 py-6">
+  <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 md:gap-0">
+    <div class="flex items-center gap-2.5">
+      <i data-lucide="anchor" class="w-5 h-5 text-accent"></i>
+      <span class="font-mono text-sm font-bold text-white">BayouBid AI</span>
+      <span class="text-xs text-white/40 font-body ml-2 hidden sm:inline">Lafourche Business Recovery Initiative</span>
+    </div>
+    <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-6">
+      <span class="text-xs text-white/40 font-body">2026 Mastercard Data Challenge</span>
+      <span class="text-xs text-white/40 font-body">Team DataDrive — Grambling State University</span>
+    </div>
+  </div>
+</footer>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

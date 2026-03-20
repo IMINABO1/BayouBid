@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BayouBid AI — Procurement Copilot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: '#1A2B4D',
+            accent: '#FF8400',
+            bg: '#F2F3F0',
+            border: '#CBCCC9',
+            chip: '#E7E8E5',
+            txt: '#111111',
+            txtsec: '#666666',
+            warn: '#E9E3D8',
+            warntxt: '#804200',
+            cdfi: '#DFE6E1',
+            cdfitxt: '#004D1A',
+            sba: '#DFDFE6',
+            sbatxt: '#000066',
+            ok: '#22C55E',
+          },
+          fontFamily: {
+            heading: ['"Space Grotesk"', 'sans-serif'],
+            body: ['"Inter"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+            geist: ['"Geist"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #F2F3F0; margin: 0; }
+    .fade-in { animation: fadeIn 0.3s ease-in; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .score-animate { animation: scoreIn 0.6s ease-out; }
+    @keyframes scoreIn { from { width: 0; } }
+    .chip { font-family: 'JetBrains Mono', monospace; font-size: 14px; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: #CBCCC9; border-radius: 3px; }
+    .modal-overlay { background: rgba(0,0,0,0.4); }
+  </style>
+</head>
+<body class="min-h-screen">
+
+<!-- ==================== NAV BAR ==================== -->
+<nav class="flex items-center justify-between bg-white h-[52px] px-3 md:px-8 border-b border-border w-full sticky top-0 z-50">
+  <div class="flex items-center gap-2.5 shrink-0">
+    <i data-lucide="anchor" class="w-7 h-7 text-accent"></i>
+    <span class="font-mono text-lg font-bold text-txt">BayouBid AI</span>
+  </div>
+  <div class="hidden md:flex items-center gap-2 border border-border rounded px-2 py-1.5 flex-1 max-w-[460px] mx-4">
+    <i data-lucide="search" class="w-4 h-4 text-txtsec"></i>
+    <input type="text" placeholder="Search contracts, NAICS, agencies, keywords" class="flex-1 text-sm text-txtsec bg-transparent outline-none font-geist">
+  </div>
+  <div class="flex items-center gap-2 md:gap-3">
+    <i data-lucide="bell" class="w-5 h-5 text-txtsec cursor-pointer"></i>
+    <i data-lucide="help-circle" class="w-5 h-5 text-txtsec cursor-pointer hidden sm:block"></i>
+    <div class="w-8 h-8 rounded-full bg-chip border border-border flex items-center justify-center">
+      <span class="font-mono text-xs font-semibold text-txt">JD</span>
+    </div>
+    <div class="hidden lg:flex items-center gap-1 bg-chip rounded-full px-2 py-1 border border-border">
+      <span class="chip text-txt">Lafourche Parish</span>
+    </div>
+    <div class="hidden xl:flex items-center gap-1 bg-chip rounded-full px-2 py-1 border border-border">
+      <span class="chip text-txt">Marine / Fabrication / Oilfield Services</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ==================== HERO STRIP ==================== -->
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between bg-navy px-4 md:px-6 py-3 w-full gap-3">
+  <div class="flex flex-col gap-1 flex-1">
+    <h1 class="font-heading text-lg md:text-xl font-bold text-white">From Contract Access to Healthcare Access</h1>
+    <p class="text-sm text-white/70 font-body">AI-assisted matching and bid support for Gulf Coast small businesses</p>
+  </div>
+  <div class="hidden md:flex gap-2">
+    <div class="bg-white rounded p-2.5 w-[164px] flex flex-col gap-1">
+      <span class="font-heading text-xl font-semibold text-navy">$637B</span>
+      <span class="text-[11px] text-txtsec font-body leading-snug">FY2024 small-business-eligible federal contract market</span>
+    </div>
+    <div class="bg-white rounded p-2.5 w-[164px] flex flex-col gap-1">
+      <span class="font-heading text-xl font-semibold text-navy">$183B+</span>
+      <span class="text-[11px] text-txtsec font-body leading-snug">FY2024 federal prime contracts awarded to small businesses</span>
+    </div>
+    <div class="bg-white rounded p-2.5 w-[164px] flex flex-col gap-1 hidden lg:flex">
+      <span class="font-heading text-xl font-semibold text-navy">95%+</span>
+      <span class="text-[11px] text-txtsec font-body leading-snug">Port Fourchon share of Gulf deepwater energy production serviced</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MAIN BODY ==================== -->
+<div class="flex flex-col lg:flex-row gap-3 p-3 px-3 md:px-5 w-full" style="min-height: calc(100vh - 52px - 68px - 44px);">
+
+  <!-- LEFT COLUMN -->
+  <div id="leftCol" class="flex-1 flex flex-col gap-2.5 min-w-0">
+
+    <!-- View 1: Opportunity Feed -->
+    <div id="view1Left" class="flex flex-col gap-2.5">
+      <div class="flex flex-col gap-0.5">
+        <div class="flex items-center justify-between">
+          <h2 class="font-heading text-base font-semibold text-txt">Matched Opportunities</h2>
+          <button id="matchBtn" onclick="matchRFPs()" class="bg-accent hover:bg-orange-500 text-white font-mono text-sm font-semibold px-4 py-2 rounded-full flex items-center gap-2 transition-colors">
+            <i data-lucide="zap" class="w-4 h-4"></i>
+            Match RFPs to Businesses
+          </button>
+        </div>
+        <p class="text-[11px] text-txtsec font-body leading-snug">Sourced from real procurement channels like SAM.gov and Louisiana LaPAC</p>
+      </div>
+      <!-- Filters -->
+      <div class="flex gap-2 flex-wrap">
+        <span class="chip bg-chip rounded-full px-2 py-1 border border-border text-txt">Source</span>
+        <span class="chip bg-chip rounded-full px-2 py-1 border border-border text-txt">NAICS</span>
+        <span class="chip bg-chip rounded-full px-2 py-1 border border-border text-txt">Set-aside</span>
+        <span class="chip bg-chip rounded-full px-2 py-1 border border-border text-txt">Contract value</span>
+        <span class="chip bg-chip rounded-full px-2 py-1 border border-border text-txt">Deadline</span>
+        <span class="chip bg-chip rounded-full px-2 py-1 border border-border text-txt">Location</span>
+        <span class="chip bg-chip rounded-full px-2 py-1 border border-border text-txt">Fit score</span>
+      </div>
+      <!-- RFP Cards Container -->
+      <div id="rfpCards" class="flex flex-col gap-2.5"></div>
+    </div>
+
+    <!-- View 2: RFP Detail -->
+    <div id="view2Left" class="hidden flex flex-col gap-3 fade-in">
+      <button onclick="showView('home')" class="flex items-center gap-1 text-txtsec text-sm font-mono hover:text-txt transition-colors w-fit">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Opportunities
+      </button>
+      <div id="rfpDetail" class="bg-white rounded border border-border shadow-sm"></div>
+    </div>
+
+    <!-- View 3: Document Upload -->
+    <div id="view3Left" class="hidden flex flex-col gap-3 fade-in">
+      <button onclick="showView('detail')" class="flex items-center gap-1 text-txtsec text-sm font-mono hover:text-txt transition-colors w-fit">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to RFP Detail
+      </button>
+      <div id="uploadSection" class="bg-white rounded border border-border shadow-sm"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div id="rightCol" class="w-full lg:w-[560px] flex flex-col gap-2 shrink-0">
+
+    <!-- Module A: Business Profile -->
+    <div id="profileCard" class="bg-white rounded border border-border shadow-sm flex flex-col overflow-hidden">
+      <div class="flex items-center justify-between px-3 py-2 border-b border-border">
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="building-2" class="w-5 h-5 text-accent"></i>
+          <span class="font-mono text-base font-semibold text-txt">Business Profile</span>
+        </div>
+        <button class="text-sm font-mono text-txtsec hover:text-txt transition-colors">Edit Profile</button>
+      </div>
+      <div id="profileContent" class="px-3 py-2.5 flex flex-col gap-1.5">
+        <p class="text-sm text-txtsec font-geist italic">Select an RFP or click "Match RFPs" to see matched businesses</p>
+      </div>
+    </div>
+
+    <!-- Module C: AI Draft Assistant -->
+    <div id="draftCard" class="bg-white rounded border border-border shadow-sm flex flex-col overflow-hidden">
+      <div class="flex items-center gap-2.5 px-3 py-2 border-b border-border">
+        <i data-lucide="file-text" class="w-5 h-5 text-accent"></i>
+        <span class="font-mono text-base font-semibold text-txt">AI Draft Assistant</span>
+      </div>
+      <div id="draftContent" class="px-3 py-2.5 flex flex-col gap-1.5">
+        <p class="text-sm text-txtsec font-geist italic">Draft response will appear here when you select an RFP</p>
+      </div>
+    </div>
+
+    <!-- Module D: Advisor Guidance -->
+    <div id="advisorCard" class="bg-white rounded border border-border shadow-sm flex flex-col overflow-hidden">
+      <div class="flex items-center gap-2.5 px-3 py-2 border-b border-border">
+        <i data-lucide="users" class="w-5 h-5 text-[#000066]"></i>
+        <span class="font-mono text-base font-semibold text-txt">Advisor Guidance</span>
+      </div>
+      <div id="advisorContent" class="px-3 py-2.5 flex flex-col gap-2">
+        <p class="text-sm text-txtsec font-geist italic">Advisor recommendations will show when you work on an RFP</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== IMPACT STRIP ==================== -->
+<div class="flex items-center justify-center bg-navy gap-2.5 px-3 md:px-5 py-2.5 w-full flex-wrap">
+  <div class="flex items-center gap-2"><i data-lucide="target" class="w-[18px] h-[18px] text-white"></i><span class="font-mono text-[13px] font-medium text-white">Better-fit bids</span></div>
+  <i data-lucide="chevron-right" class="w-4 h-4 text-white/40"></i>
+  <div class="flex items-center gap-2"><i data-lucide="send" class="w-[18px] h-[18px] text-white"></i><span class="font-mono text-[13px] font-medium text-white">More applications</span></div>
+  <i data-lucide="chevron-right" class="w-4 h-4 text-white/40"></i>
+  <div class="flex items-center gap-2"><i data-lucide="trophy" class="w-[18px] h-[18px] text-accent"></i><span class="font-mono text-[13px] font-medium text-white">More contracts won</span></div>
+  <i data-lucide="chevron-right" class="w-4 h-4 text-white/40"></i>
+  <div class="flex items-center gap-2"><i data-lucide="briefcase" class="w-[18px] h-[18px] text-white"></i><span class="font-mono text-[13px] font-medium text-white">Stable jobs</span></div>
+  <i data-lucide="chevron-right" class="w-4 h-4 text-white/40"></i>
+  <div class="flex items-center gap-2"><i data-lucide="shield" class="w-[18px] h-[18px] text-white"></i><span class="font-mono text-[13px] font-medium text-white">Insurance stability</span></div>
+  <i data-lucide="chevron-right" class="w-4 h-4 text-white/40"></i>
+  <div class="flex items-center gap-2"><i data-lucide="heart-pulse" class="w-[18px] h-[18px] text-ok"></i><span class="font-mono text-[13px] font-semibold text-ok">Healthcare affordability</span></div>
+</div>
+
+<!-- ==================== SUCCESS MODAL ==================== -->
+<div id="successModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center modal-overlay">
+  <div class="bg-white rounded-lg shadow-xl p-8 max-w-md w-full mx-4 text-center flex flex-col gap-4 fade-in">
+    <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto">
+      <i data-lucide="check-circle" class="w-8 h-8 text-ok"></i>
+    </div>
+    <h3 class="font-heading text-xl font-bold text-txt">Application Submitted!</h3>
+    <p class="text-sm text-txtsec font-body">Your bid package for <span id="modalRfpTitle" class="font-semibold text-txt"></span> has been submitted. Your advisor will review and follow up within 48 hours.</p>
+    <div class="flex gap-3 justify-center mt-2">
+      <button onclick="showView('home'); document.getElementById('successModal').classList.add('hidden');" class="bg-accent hover:bg-orange-500 text-white font-mono text-sm font-semibold px-6 py-2.5 rounded-full transition-colors">Back to Opportunities</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+// ===== SAMPLE DATA =====
+const businesses = [
+  { name: "Bayou Marine Fabrication LLC", services: "Welding, fabrication, vessel support, emergency repair", area: "Lafourche, Terrebonne, Gulf support corridor", team: "12 employees", certs: "Small Business, HUBZone (pending)", readiness: 72, missing: "Updated capability statement, bonding docs, HUBZone review" },
+  { name: "Gulf Coast Heavy Equipment Inc", services: "Crane operation, heavy equipment rental, site prep", area: "Lafourche, Terrebonne, St. Mary Parish", team: "28 employees", certs: "Small Business, 8(a) Certified", readiness: 85, missing: "Insurance renewal, updated equipment inventory" },
+  { name: "Thibodaux Environmental Services", services: "Environmental remediation, tank cleaning, hazmat disposal", area: "Lafourche, Assumption, Terrebonne", team: "9 employees", certs: "Small Business, SDVOSB", readiness: 64, missing: "EPA compliance docs, bonding capacity letter, past performance refs" },
+  { name: "Port Fourchon Logistics Co", services: "Maritime logistics, cargo handling, dock management", area: "Lafourche Parish, Gulf of Mexico corridor", team: "35 employees", certs: "Small Business, Women-Owned", readiness: 91, missing: "Updated SAM.gov profile" },
+  { name: "Acadiana Electrical Contractors", services: "Industrial electrical, generator maintenance, panel upgrades", area: "Lafourche, Terrebonne, Assumption, St. Mary", team: "16 employees", certs: "Small Business, Veteran-Owned", readiness: 78, missing: "Electrical license renewal, capability statement update" }
+];
+
+const rfps = [
+  { id: 1, title: "Coastal Facility Maintenance & Repair Support", source: "SAM.gov", sourceBg: "#DFE6E1", sourceColor: "#004D1A", buyer: "Federal / infrastructure buyer", setAside: "Small Business Set-Aside", value: "$250K–$1.2M", fit: 89, naics: "238290", deadline: "Apr 15, 2026", location: "Lafourche Parish, LA", reason: "Strong overlap with your marine maintenance certifications and Gulf Coast service area.", matchedBiz: 0, description: "The U.S. Army Corps of Engineers seeks qualified small businesses to provide ongoing maintenance, repair, and facility support services for coastal infrastructure along the Gulf of Mexico. Work includes structural welding, corrosion control, dock repair, and emergency response capabilities.", requirements: ["Active SAM.gov registration", "NAICS 238290 experience", "Gulf Coast operational capability", "Bonding capacity $1M+", "Safety certifications (OSHA 30)"] },
+  { id: 2, title: "Public Works Equipment & Maintenance Services", source: "Louisiana LaPAC", sourceBg: "#E9E3D8", sourceColor: "#804200", buyer: "State / local public entity", setAside: "Open bid", value: "$75K–$400K", fit: 81, naics: "333120", deadline: "Apr 28, 2026", location: "Terrebonne Parish, LA", reason: "Your equipment fleet and Louisiana-based operations align well with this regional procurement.", matchedBiz: 1, description: "Terrebonne Parish Government is soliciting bids for heavy equipment maintenance, public works vehicle servicing, and emergency fleet repair support. Contract includes preventive maintenance schedules and on-call emergency response.", requirements: ["Louisiana business license", "Equipment maintenance experience", "Emergency response capability", "References from public entities", "Insurance coverage $500K+"] },
+  { id: 3, title: "Emergency Vessel Repair & Mobilization", source: "SAM.gov", sourceBg: "#DFE6E1", sourceColor: "#004D1A", buyer: "Federal / maritime agency", setAside: "Small Business Set-Aside", value: "$500K–$2M", fit: 94, naics: "336611", deadline: "May 5, 2026", location: "Port Fourchon, LA", reason: "Direct alignment with your core welding/fabrication capabilities and Port Fourchon proximity.", matchedBiz: 0, description: "MARAD seeks emergency vessel repair and rapid mobilization support for federal maritime operations in the Gulf region. Includes hull repair, propulsion system maintenance, and 24/7 emergency response.", requirements: ["Marine welding certifications (AWS D3.6)", "24/7 emergency response capability", "Port Fourchon facility access", "Past performance on federal vessel contracts", "Mobilization within 4 hours"] },
+  { id: 4, title: "Industrial Electrical Upgrade — Port Authority", source: "Louisiana LaPAC", sourceBg: "#E9E3D8", sourceColor: "#804200", buyer: "Port authority / quasi-governmental", setAside: "Open bid", value: "$120K–$350K", fit: 76, naics: "238210", deadline: "May 18, 2026", location: "South Lafourche, LA", reason: "Electrical upgrade scope matches your industrial contracting experience in the parish.", matchedBiz: 4, description: "Greater Lafourche Port Commission seeks electrical contractors for facility-wide upgrades including panel replacements, generator installations, LED lighting retrofits, and emergency power systems at Port Fourchon.", requirements: ["Louisiana electrical contractor license", "Industrial electrical experience", "Generator installation capability", "Port facility security clearance", "OSHA compliance documentation"] },
+  { id: 5, title: "Environmental Remediation — Offshore Platform Decom", source: "SAM.gov", sourceBg: "#DFE6E1", sourceColor: "#004D1A", buyer: "Federal / energy regulator", setAside: "Small Business Set-Aside", value: "$1M–$4M", fit: 85, naics: "562910", deadline: "Jun 2, 2026", location: "Gulf of Mexico OCS", reason: "Consortium opportunity — combines environmental remediation with logistics and fabrication capabilities.", matchedBiz: 2, isFractional: true, description: "BSEE requires environmental remediation support for offshore platform decommissioning in the Gulf of Mexico. This is a large-scope contract ideal for a consortium of small businesses combining environmental, logistics, and fabrication expertise.", requirements: ["EPA remediation certifications", "Offshore operational experience", "Vessel/logistics support capability", "Consortium teaming agreement", "Bonding capacity $2M+", "Environmental insurance coverage"] }
+];
+
+let currentRfp = null;
+let matched = false;
+
+// ===== RENDER FUNCTIONS =====
+function renderRFPCard(rfp) {
+  const fitDisplay = matched ? rfp.fit : '—';
+  const fitBarWidth = matched ? rfp.fit : 0;
+  const biz = businesses[rfp.matchedBiz];
+  return `
+    <div class="bg-white rounded border border-border shadow-sm flex flex-col overflow-hidden">
+      <div class="flex items-center justify-between px-3.5 py-2 border-b border-border">
+        <div class="flex items-center gap-1 rounded-full px-2 py-1 text-xs font-mono font-semibold" style="background:${rfp.sourceBg}; color:${rfp.sourceColor}">
+          ${rfp.source}
+        </div>
+        <div class="flex items-center gap-2">
+          ${rfp.isFractional ? '<span class="text-[11px] font-mono font-semibold text-sbatxt bg-sba rounded-full px-2 py-0.5">Consortium</span>' : ''}
+          <span class="font-mono text-sm font-semibold ${matched ? 'text-accent' : 'text-txtsec'}">Fit: ${fitDisplay}${matched ? '%' : ''}</span>
+          <div class="w-20 h-2 bg-chip rounded-full overflow-hidden">
+            <div class="h-full bg-accent rounded-full ${matched ? 'score-animate' : ''}" style="width:${fitBarWidth}%"></div>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col gap-1 px-3.5 py-2.5">
+        <span class="font-heading text-[13px] font-semibold text-txt">${rfp.title}</span>
+        <div class="flex gap-4">
+          <span class="text-[13px] text-txtsec font-body">${rfp.buyer}</span>
+          <span class="text-[13px] text-txtsec font-body">${rfp.setAside}</span>
+        </div>
+        <span class="text-[11px] font-medium text-txt font-body">Est. Value: ${rfp.value}</span>
+        ${matched ? `<p class="text-[11px] text-txtsec italic font-body leading-snug">${rfp.reason}</p>` : ''}
+        ${matched ? `<div class="flex items-center gap-1.5 mt-0.5"><i data-lucide="building-2" class="w-3 h-3 text-accent"></i><span class="text-[11px] font-mono font-medium text-accent">Matched: ${biz.name}</span></div>` : ''}
+      </div>
+      <div class="flex items-center justify-end gap-3 px-3.5 py-1.5 border-t border-border">
+        <button onclick="viewRFPDetail(${rfp.id})" class="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-mono font-medium text-txt bg-bg border border-border shadow-sm hover:bg-chip transition-colors">
+          <i data-lucide="eye" class="w-4 h-4"></i> View details
+        </button>
+        <button onclick="viewRFPDetail(${rfp.id})" class="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-mono font-medium text-white bg-accent hover:bg-orange-500 transition-colors">
+          <i data-lucide="pen-tool" class="w-4 h-4"></i> Draft response
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function renderAllCards() {
+  document.getElementById('rfpCards').innerHTML = rfps.map(renderRFPCard).join('');
+  lucide.createIcons();
+}
+
+function renderBusinessProfile(biz) {
+  document.getElementById('profileContent').innerHTML = `
+    <span class="font-mono text-[13px] font-semibold text-txt">${biz.name}</span>
+    <div class="flex flex-col gap-1">
+      <div class="flex gap-2"><span class="text-[13px] font-semibold text-txtsec font-geist">Services:</span><span class="text-[13px] text-txt font-geist">${biz.services}</span></div>
+      <div class="flex gap-2"><span class="text-[13px] font-semibold text-txtsec font-geist">Service Area:</span><span class="text-[13px] text-txt font-geist">${biz.area}</span></div>
+      <div class="flex gap-4">
+        <div class="flex gap-1.5"><span class="text-[13px] font-semibold text-txtsec font-geist">Team Size:</span><span class="text-[13px] text-txt font-geist">${biz.team}</span></div>
+        <div class="flex gap-1.5"><span class="text-[13px] font-semibold text-txtsec font-geist">Certifications:</span><span class="text-[13px] text-txt font-geist">${biz.certs}</span></div>
+      </div>
+    </div>
+    <div class="flex flex-col gap-1">
+      <div class="flex items-center justify-between">
+        <span class="text-[13px] font-semibold text-txtsec font-geist">Readiness Status</span>
+        <span class="font-mono text-sm font-semibold text-accent">${biz.readiness}%</span>
+      </div>
+      <div class="w-full h-4 bg-chip rounded-full overflow-hidden border border-border">
+        <div class="h-full bg-accent rounded-full score-animate" style="width:${biz.readiness}%"></div>
+      </div>
+    </div>
+    <div class="bg-warn rounded-lg px-2 py-1.5 flex flex-col gap-0.5">
+      <span class="text-xs font-semibold text-warntxt font-geist">Missing items</span>
+      <span class="text-xs text-warntxt font-geist">${biz.missing}</span>
+    </div>
+  `;
+}
+
+function renderDraftAssistant(rfp) {
+  const biz = businesses[rfp.matchedBiz];
+  document.getElementById('draftContent').innerHTML = `
+    <div class="bg-bg rounded-lg border border-border p-2.5 flex flex-col gap-1 max-h-[120px] overflow-hidden">
+      <span class="text-[13px] font-semibold text-txt font-geist">1. Company Overview</span>
+      <span class="text-xs text-txtsec font-geist">${biz.name} is a Lafourche-based small business specializing in ${biz.services.toLowerCase()}...</span>
+      <span class="text-[13px] font-semibold text-txt font-geist">2. Relevant Past Performance</span>
+      <span class="text-xs text-txtsec font-geist">Emergency repair operations for offshore platforms, maintenance contracts...</span>
+      <span class="text-[13px] font-semibold text-txt font-geist">3. Staffing & Mobilization Plan</span>
+      <span class="text-[13px] font-semibold text-txt font-geist">4. Equipment Availability</span>
+      <span class="text-[13px] font-semibold text-txt font-geist">5. Compliance Checklist</span>
+      <span class="text-[13px] font-semibold text-warntxt font-geist">6. Missing Attachments (2)</span>
+    </div>
+    <div class="flex gap-2 pt-1">
+      <button class="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-mono font-medium text-white bg-accent hover:bg-orange-500 transition-colors">
+        <i data-lucide="sparkles" class="w-4 h-4"></i> Generate capability statement
+      </button>
+      <button class="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-mono font-medium text-txt bg-bg border border-border shadow-sm hover:bg-chip transition-colors">
+        <i data-lucide="file-down" class="w-4 h-4"></i> Draft full proposal
+      </button>
+    </div>
+  `;
+  lucide.createIcons();
+}
+
+function renderAdvisorGuidance() {
+  document.getElementById('advisorContent').innerHTML = `
+    <div class="bg-cdfi rounded-lg border border-border p-2.5 flex flex-col gap-1">
+      <div class="flex items-center gap-2">
+        <i data-lucide="landmark" class="w-4 h-4 text-cdfitxt"></i>
+        <span class="font-mono text-sm font-semibold text-cdfitxt">CDFI Partner</span>
+      </div>
+      <span class="text-xs text-txt font-geist">&bull; Working capital estimate</span>
+      <span class="text-xs text-txt font-geist">&bull; Equipment financing options</span>
+      <span class="text-xs text-txt font-geist">&bull; Bridge funding for payroll / mobilization</span>
+    </div>
+    <div class="bg-sba rounded-lg border border-border p-2.5 flex flex-col gap-1">
+      <div class="flex items-center gap-2">
+        <i data-lucide="shield-check" class="w-4 h-4 text-sbatxt"></i>
+        <span class="font-mono text-sm font-semibold text-sbatxt">SBA / APEX Support</span>
+      </div>
+      <span class="text-xs text-txt font-geist">&bull; SAM registration status</span>
+      <span class="text-xs text-txt font-geist">&bull; Certification guidance</span>
+      <span class="text-xs text-txt font-geist">&bull; Bid-readiness checklist</span>
+      <span class="text-xs text-txt font-geist">&bull; Procurement coaching</span>
+    </div>
+  `;
+  lucide.createIcons();
+}
+
+// ===== VIEW MANAGEMENT =====
+function showView(view) {
+  document.getElementById('view1Left').classList.add('hidden');
+  document.getElementById('view2Left').classList.add('hidden');
+  document.getElementById('view3Left').classList.add('hidden');
+
+  if (view === 'home') {
+    document.getElementById('view1Left').classList.remove('hidden');
+    currentRfp = null;
+    // Reset sidebar
+    document.getElementById('profileContent').innerHTML = '<p class="text-sm text-txtsec font-geist italic">Select an RFP or click "Match RFPs" to see matched businesses</p>';
+    document.getElementById('draftContent').innerHTML = '<p class="text-sm text-txtsec font-geist italic">Draft response will appear here when you select an RFP</p>';
+    document.getElementById('advisorContent').innerHTML = '<p class="text-sm text-txtsec font-geist italic">Advisor recommendations will show when you work on an RFP</p>';
+  } else if (view === 'detail') {
+    document.getElementById('view2Left').classList.remove('hidden');
+  } else if (view === 'upload') {
+    document.getElementById('view3Left').classList.remove('hidden');
+  }
+}
+
+function viewRFPDetail(rfpId) {
+  const rfp = rfps.find(r => r.id === rfpId);
+  if (!rfp) return;
+  currentRfp = rfp;
+  const biz = businesses[rfp.matchedBiz];
+
+  // Render detail view
+  document.getElementById('rfpDetail').innerHTML = `
+    <div class="flex items-center justify-between px-4 py-2.5 border-b border-border">
+      <div class="flex items-center gap-2">
+        <span class="rounded-full px-2 py-1 text-xs font-mono font-semibold" style="background:${rfp.sourceBg}; color:${rfp.sourceColor}">${rfp.source}</span>
+        <span class="font-heading text-base font-semibold text-txt">${rfp.title}</span>
+      </div>
+      ${rfp.isFractional ? '<span class="text-xs font-mono font-semibold text-sbatxt bg-sba rounded-full px-2 py-1">Fractional RFP — Consortium</span>' : ''}
+    </div>
+    <div class="px-4 py-3 flex flex-col gap-3">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2">
+        <div><span class="text-xs text-txtsec font-geist font-semibold">Buyer Type</span><p class="text-sm text-txt font-geist">${rfp.buyer}</p></div>
+        <div><span class="text-xs text-txtsec font-geist font-semibold">Set-Aside</span><p class="text-sm text-txt font-geist">${rfp.setAside}</p></div>
+        <div><span class="text-xs text-txtsec font-geist font-semibold">Estimated Value</span><p class="text-sm text-txt font-geist font-semibold">${rfp.value}</p></div>
+        <div><span class="text-xs text-txtsec font-geist font-semibold">NAICS Code</span><p class="text-sm text-txt font-geist">${rfp.naics}</p></div>
+        <div><span class="text-xs text-txtsec font-geist font-semibold">Deadline</span><p class="text-sm text-txt font-geist font-semibold text-red-600">${rfp.deadline}</p></div>
+        <div><span class="text-xs text-txtsec font-geist font-semibold">Location</span><p class="text-sm text-txt font-geist">${rfp.location}</p></div>
+      </div>
+      <div>
+        <span class="text-xs text-txtsec font-geist font-semibold">Description</span>
+        <p class="text-sm text-txt font-body leading-relaxed mt-1">${rfp.description}</p>
+      </div>
+      <div>
+        <span class="text-xs text-txtsec font-geist font-semibold">Requirements</span>
+        <ul class="mt-1 flex flex-col gap-1">
+          ${rfp.requirements.map(r => `<li class="flex items-start gap-2 text-sm text-txt font-geist"><i data-lucide="check-circle" class="w-4 h-4 text-ok mt-0.5 shrink-0"></i>${r}</li>`).join('')}
+        </ul>
+      </div>
+      ${matched ? `
+      <div class="bg-orange-50 border border-accent/30 rounded-lg p-3 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i data-lucide="building-2" class="w-5 h-5 text-accent"></i>
+          <div>
+            <span class="font-mono text-sm font-semibold text-txt">${biz.name}</span>
+            <span class="text-xs text-txtsec ml-2">Fit Score: <strong class="text-accent">${rfp.fit}%</strong></span>
+          </div>
+        </div>
+        <span class="text-xs text-accent font-mono font-semibold">${rfp.isFractional ? 'Consortium Lead' : 'Primary Bidder'}</span>
+      </div>
+      ` : ''}
+      <div class="flex flex-wrap gap-2">
+        <button onclick="showUploadView()" class="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-mono font-medium text-white bg-accent hover:bg-orange-500 transition-colors">
+          <i data-lucide="upload" class="w-4 h-4"></i> Upload documents
+        </button>
+        <button class="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-mono font-medium text-txt bg-bg border border-border shadow-sm hover:bg-chip transition-colors">
+          <i data-lucide="message-square" class="w-4 h-4"></i> Review requirements
+        </button>
+        <button class="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-mono font-medium text-txt bg-bg border border-border shadow-sm hover:bg-chip transition-colors">
+          <i data-lucide="users" class="w-4 h-4"></i> Ask advisor
+        </button>
+      </div>
+    </div>
+  `;
+
+  // Update sidebar
+  renderBusinessProfile(biz);
+  renderDraftAssistant(rfp);
+  renderAdvisorGuidance();
+
+  showView('detail');
+  lucide.createIcons();
+}
+
+function showUploadView() {
+  if (!currentRfp) return;
+  const rfp = currentRfp;
+  const biz = businesses[rfp.matchedBiz];
+  const docs = [
+    { name: "Capability Statement", required: true, status: "missing" },
+    { name: "SAM.gov Registration Proof", required: true, status: "uploaded" },
+    { name: "Bonding / Insurance Certificate", required: true, status: "missing" },
+    { name: "Past Performance References", required: true, status: "uploaded" },
+    { name: "OSHA Safety Certifications", required: true, status: "missing" },
+    { name: "Financial Statements (2 years)", required: false, status: "missing" },
+    { name: "Teaming Agreement (if consortium)", required: rfp.isFractional, status: "missing" },
+  ];
+
+  document.getElementById('uploadSection').innerHTML = `
+    <div class="flex items-center justify-between px-4 py-2.5 border-b border-border">
+      <div class="flex items-center gap-2.5">
+        <i data-lucide="folder-up" class="w-5 h-5 text-accent"></i>
+        <span class="font-mono text-base font-semibold text-txt">Document Upload — ${rfp.title}</span>
+      </div>
+    </div>
+    <div class="px-4 py-3 flex flex-col gap-3">
+      <div class="bg-orange-50 border border-accent/30 rounded-lg p-3 flex items-center gap-2">
+        <i data-lucide="building-2" class="w-4 h-4 text-accent"></i>
+        <span class="text-sm font-mono font-medium text-txt">Submitting as: ${biz.name}</span>
+      </div>
+      <div class="flex flex-col gap-2">
+        <span class="text-xs text-txtsec font-geist font-semibold uppercase tracking-wide">Required Documents Checklist</span>
+        ${docs.map((d, i) => `
+          <div class="flex items-center justify-between py-2 px-3 rounded-lg border ${d.status === 'uploaded' ? 'border-ok/30 bg-green-50' : 'border-border bg-white'}" id="doc-${i}">
+            <div class="flex items-center gap-2.5">
+              <button onclick="toggleDoc(${i})" class="w-5 h-5 rounded border ${d.status === 'uploaded' ? 'bg-ok border-ok' : 'border-border bg-white'} flex items-center justify-center cursor-pointer">
+                ${d.status === 'uploaded' ? '<i data-lucide="check" class="w-3 h-3 text-white"></i>' : ''}
+              </button>
+              <span class="text-sm font-geist text-txt">${d.name}</span>
+              ${d.required ? '<span class="text-[10px] font-mono text-red-500">Required</span>' : '<span class="text-[10px] font-mono text-txtsec">Optional</span>'}
+            </div>
+            <label class="flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-mono font-medium text-accent bg-orange-50 border border-accent/30 cursor-pointer hover:bg-orange-100 transition-colors">
+              <i data-lucide="upload" class="w-3 h-3"></i> Upload
+              <input type="file" class="hidden" onchange="uploadFile(${i}, this)">
+            </label>
+          </div>
+        `).join('')}
+      </div>
+      <div class="border-2 border-dashed border-border rounded-lg p-6 flex flex-col items-center gap-2 text-center hover:border-accent/50 transition-colors">
+        <i data-lucide="cloud-upload" class="w-10 h-10 text-txtsec"></i>
+        <p class="text-sm text-txtsec font-body">Drag & drop files here, or click to browse</p>
+        <label class="flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-mono font-medium text-white bg-accent hover:bg-orange-500 transition-colors cursor-pointer mt-1">
+          <i data-lucide="folder-open" class="w-4 h-4"></i> Browse Files
+          <input type="file" multiple class="hidden" onchange="handleBulkUpload(this)">
+        </label>
+      </div>
+      <button onclick="submitApplication()" class="w-full flex items-center justify-center gap-2 rounded-full px-6 py-3 text-base font-mono font-semibold text-white bg-accent hover:bg-orange-500 transition-colors mt-2">
+        <i data-lucide="send" class="w-5 h-5"></i> Submit Application
+      </button>
+    </div>
+  `;
+
+  showView('upload');
+  lucide.createIcons();
+}
+
+// ===== INTERACTIONS =====
+function matchRFPs() {
+  if (matched) return;
+  matched = true;
+  const btn = document.getElementById('matchBtn');
+  btn.innerHTML = '<i data-lucide="check-circle" class="w-4 h-4"></i> Matched!';
+  btn.classList.remove('bg-accent', 'hover:bg-orange-500');
+  btn.classList.add('bg-ok', 'hover:bg-green-600');
+  renderAllCards();
+  // Populate sidebar with first business
+  renderBusinessProfile(businesses[0]);
+  renderDraftAssistant(rfps[0]);
+  renderAdvisorGuidance();
+}
+
+function toggleDoc(index) {
+  const el = document.getElementById(`doc-${index}`);
+  const btn = el.querySelector('button');
+  const isChecked = btn.classList.contains('bg-ok');
+  if (isChecked) {
+    btn.classList.remove('bg-ok', 'border-ok');
+    btn.classList.add('bg-white', 'border-border');
+    btn.innerHTML = '';
+    el.classList.remove('border-ok/30', 'bg-green-50');
+    el.classList.add('border-border', 'bg-white');
+  } else {
+    btn.classList.remove('bg-white', 'border-border');
+    btn.classList.add('bg-ok', 'border-ok');
+    btn.innerHTML = '<i data-lucide="check" class="w-3 h-3 text-white"></i>';
+    el.classList.remove('border-border', 'bg-white');
+    el.classList.add('border-ok/30', 'bg-green-50');
+    lucide.createIcons();
+  }
+}
+
+function uploadFile(index, input) {
+  if (input.files.length > 0) {
+    const el = document.getElementById(`doc-${index}`);
+    const btn = el.querySelector('button');
+    btn.classList.remove('bg-white', 'border-border');
+    btn.classList.add('bg-ok', 'border-ok');
+    btn.innerHTML = '<i data-lucide="check" class="w-3 h-3 text-white"></i>';
+    el.classList.remove('border-border', 'bg-white');
+    el.classList.add('border-ok/30', 'bg-green-50');
+    lucide.createIcons();
+  }
+}
+
+function handleBulkUpload(input) {
+  // Decorative — just show a notification
+  if (input.files.length > 0) {
+    alert(`${input.files.length} file(s) selected. In a live system, these would be uploaded and matched to requirements.`);
+  }
+}
+
+function submitApplication() {
+  if (currentRfp) {
+    document.getElementById('modalRfpTitle').textContent = currentRfp.title;
+  }
+  document.getElementById('successModal').classList.remove('hidden');
+  lucide.createIcons();
+}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+  renderAllCards();
+  lucide.createIcons();
+});
+</script>
+</body>
+</html>
